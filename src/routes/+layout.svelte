@@ -5,7 +5,7 @@
         box-sizing: border-box;
         font-family: Arial, sans-serif;
     }
-    main {
+    :global(main) {
         background-color: #030303;
     }
 </style>

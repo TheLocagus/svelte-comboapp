@@ -1,6 +1,17 @@
 <script lang="ts">
   import {todos} from './store';
   import {PrioEnum} from "../../types/todo.js";
+  import Button from "../../components/Button.svelte";
+
+  const showEdit = (id) => {
+    console.log('edit', id)
+  }
+  const showDetails = () => {
+    console.log('details')
+  }
+  const showRemove = () => {
+    console.log('remove')
+  }
 
   const setColorPrio = (prio: PrioEnum) => {
     switch (prio) {
@@ -18,7 +29,7 @@
 
 <main>
     <div class="add-todo-container">
-        <button class="add-todo">Add TODO</button>
+        <Button className="add-todo" type="button" text="Add TODO"/>
     </div>
     <div class="todo-container">
         {#each $todos as todo, i (todo.id)}
@@ -34,11 +45,9 @@
                         <div class="time">{todo.initialTime} - {todo.finishTime}</div>
                     </div>
                     <div class="todo__buttons">
-
-                        <button>Details</button>
-                        <button>Edit</button>
-                        <button>Remove</button>
-
+                        <Button type="button" onClick="{showDetails}" text="Details" className="todo-button" />
+                        <Button type="button" onClick="{() => showEdit(todo.id)}" text="Edit" className="todo-button"/>
+                        <Button type="button" onClick="{showRemove}" text="Remove" className="todo-button"/>
                     </div>
                 </div>
             {/if}
@@ -66,22 +75,6 @@
         justify-content: center;
         align-items: center;
     }
-
-    .add-todo-container button {
-        padding: 15px 70px;
-        background-color: orangered;
-        border: 1px solid orangered;
-        color: #030303;
-        font-weight: bold;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .add-todo-container button:hover {
-        background-color: #de7249;
-        border: 1px solid orangered;
-    }
-
     .todo-container {
         flex-basis: 80%;
         margin: 0 auto;
@@ -125,23 +118,6 @@
         flex-basis: 10%;
         display: flex;
         flex-direction: column;
-    }
-
-    .todo__buttons button {
-        width: 70px;
-        margin: 1px 0;
-        padding: 2px 5px;
-        font-size: 12px;
-        background-color: #de7249;
-        border: 1px solid black;
-        border-radius: 5px;
-        color: #444;
-        cursor: pointer;
-    }
-
-    .todo__buttons button:hover {
-        background-color: orangered;
-        border: 1px solid black;
     }
 
     .low-prio {
