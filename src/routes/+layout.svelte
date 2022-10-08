@@ -1,0 +1,12 @@
+<style>
+    :global(*) {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    main {
+        background-color: #030303;
+    }
+</style>
+
+<slot></slot>
