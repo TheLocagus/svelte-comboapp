@@ -1,7 +1,42 @@
 <script lang="ts">
+  import {v4 as uuid} from 'uuid';
   import {todos} from './store';
-  import {PrioEnum} from "../../types/todo.js";
+  import {PrioEnum} from "../../types/todo";
+  import type {TodoInterface} from "../../types/todo"
   import Button from "../../components/Button.svelte";
+  import Modal from "../../components/Modal.svelte";
+  import {onMount} from "svelte";
+  import FormTodo from "../../components/FormTodo.svelte";
+  import Todo from "./components/Todo.svelte";
+
+  let isModalOpen = false;
+  let titleValue = '';
+  let descriptionValue = '';
+  let finishTimeValue = '';
+  let prioValue = PrioEnum.medium;
+
+  let tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000), day, month, year;
+
+  onMount(() => {
+    day = '' + tomorrow.getDate();
+    month = '' + (tomorrow.getMonth() + 1);
+    year = tomorrow.getFullYear();
+
+    if (month.length < 2)
+      month = '0' + month;
+    if (day.length < 2)
+      day = '0' + day;
+
+    finishTimeValue = [year, month, day].join('-');
+  })
+  const openModal = () => {
+    isModalOpen = true;
+  }
+
+  const closeModal = () => {
+    isModalOpen = false;
+    console.log(titleValue)
+  }
 
   const showEdit = (id) => {
     console.log('edit', id)
@@ -11,6 +46,23 @@
   }
   const showRemove = () => {
     console.log('remove')
+  }
+
+  const handleAddTodo = () => {
+    const values: TodoInterface = {
+      id: uuid(),
+      title: titleValue,
+      description: descriptionValue,
+      initialTime: new Date().toLocaleDateString(),
+      finishTime: (finishTimeValue.replace('-', '.').replace('-', '.')).split('.').reverse().join('.'),
+      isFinished: false,
+      prio: prioValue,
+    }
+
+    todos.update(items => [...items, values])
+    todos.subscribe(items => {
+      console.log(items)
+    })
   }
 
   const setColorPrio = (prio: PrioEnum) => {
@@ -28,31 +80,37 @@
 </script>
 
 <main>
+    {#if isModalOpen}
+        <Modal>
+            <div slot="modal-content" class="modal-content">
+                <FormTodo
+                        bind:titleValue="{titleValue}"
+                        bind:descriptionValue="{descriptionValue}"
+                        bind:finishTimeValue="{finishTimeValue}"
+                        bind:prioValue="{prioValue}"
+                />
+            </div>
+            <div slot="modal-footer" class="modal-footer">
+                <Button type="button" onClick="{closeModal}" text="Cancel" className="footer-modal-button"/>
+                <Button type="button" onClick="{handleAddTodo}" text="Add" className="footer-modal-button"/>
+            </div>
+        </Modal>
+    {/if}
     <div class="add-todo-container">
-        <Button className="add-todo" type="button" text="Add TODO"/>
+        <Button className="add-todo" type="button" text="Add TODO" onClick="{openModal}"/>
     </div>
     <div class="todo-container">
         {#each $todos as todo, i (todo.id)}
             {#if !todo.isFinished}
-                <div class="todo">
-                    <div class="todo__prio">
-                        <div class={setColorPrio(todo.prio)}></div>
-                    </div>
-                    <div class="todo__title">
-                        <div class="title">{todo.title}</div>
-                    </div>
-                    <div class="todo__time">
-                        <div class="time">{todo.initialTime} - {todo.finishTime}</div>
-                    </div>
-                    <div class="todo__buttons">
-                        <Button type="button" onClick="{showDetails}" text="Details" className="todo-button" />
-                        <Button type="button" onClick="{() => showEdit(todo.id)}" text="Edit" className="todo-button"/>
-                        <Button type="button" onClick="{showRemove}" text="Remove" className="todo-button"/>
-                    </div>
-                </div>
+                <Todo
+                        todo="{todo}"
+                        setColorPrio="{setColorPrio}"
+                        showDetails="{showDetails}"
+                        showEdit="{showEdit}"
+                        showRemove="{showRemove}"
+                />
             {/if}
         {/each}
-
     </div>
 </main>
 
@@ -75,6 +133,7 @@
         justify-content: center;
         align-items: center;
     }
+
     .todo-container {
         flex-basis: 80%;
         margin: 0 auto;
@@ -83,56 +142,10 @@
         flex-grow: 3;
     }
 
-    .todo-container .todo {
-        margin: 2px 0;
-        text-align: center;
+    .modal-footer {
+        height: 5rem;
         display: flex;
         align-items: center;
-        padding: 20px 0;
-        background-color: #de7249;
-        border-radius: 5px;
     }
 
-    .todo__prio {
-        flex-basis: 5%;
-        display: flex;
-        justify-content: center;
-    }
-
-    .prio {
-        height: 20px;
-        width: 20px;
-        border-radius: 50%;
-        background-color: yellow;
-    }
-
-    .todo__title {
-        flex-basis: 40%;
-    }
-
-    .todo__time {
-        flex-basis: 45%;
-    }
-
-    .todo__buttons {
-        flex-basis: 10%;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .low-prio {
-        background-color: yellowgreen;
-    }
-
-    .medium-prio {
-        background-color: yellow;
-    }
-
-    .hard-prio {
-        background-color: darkred;
-    }
-
-    .extreme-prio {
-        background-color: black;
-    }
 </style>

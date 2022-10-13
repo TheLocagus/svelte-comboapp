@@ -45,4 +45,19 @@
         background-color: #de7249;
         border: 1px solid orangered;
     }
+
+    .footer-modal-button {
+        height: 2.5rem;
+        width: 5.5rem;
+        margin: 0 0 0 10px;
+        background-color: white;
+        border: 1px solid black;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .footer-modal-button:hover {
+        background-color: black;
+        color: white;
+    }
 </style>
