@@ -1,6 +1,6 @@
 <main>
     <div class="a-container">
-        <a href="/todo">TODO</a>
+        <a href="/todoapp">TODO</a>
     </div>
     <div class="a-container">
         <a>Chess game</a>
