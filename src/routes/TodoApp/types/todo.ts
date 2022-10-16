@@ -20,3 +20,9 @@ export enum ModalTypeEnum {
   edit = 'edit',
   add = 'add',
 }
+
+export enum TodoTypeEnum {
+  inProgress = 'in-progress',
+  done = 'done',
+  abandoned = 'abandoned',
+}

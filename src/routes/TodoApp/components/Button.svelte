@@ -4,12 +4,13 @@
   export let onClick = null;
   export let text = null;
   export let className = null;
+  export let toGlow = null;
 </script>
 
 {#if !url}
     <button type="{type}" class="{className}" on:click={onClick}>{text}</button>
 {:else}
-    <a class="{className}" href="{url}">{text}</a>
+    <a class="{className}" class:active={toGlow} href="{url}">{text}</a>
 {/if}
 
 <style>
@@ -73,6 +74,7 @@
         font-size: 40px;
         letter-spacing: 2px;
         cursor: pointer;
+        text-shadow: -1px 0 orangered, 0 1px orangered, 1px 0 orangered, 0 -1px orangered;
 
     }
 

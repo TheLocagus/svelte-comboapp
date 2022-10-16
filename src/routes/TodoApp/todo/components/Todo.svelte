@@ -1,6 +1,8 @@
 <script lang="ts">
 
-    import Button from "../../../components/Button.svelte";
+    import Button from "../../components/Button.svelte";
+    import {TodoTypeEnum} from "../../types/todo.js";
+    import {mode} from "../../store.js";
 
     export let todo;
     export let setColorPrio;
@@ -21,8 +23,11 @@
     </div>
     <div class="todo__buttons">
         <Button type="button" onClick="{() => showDetails(todo.id)}" text="Details" className="todo-button"/>
+        {#if $mode === TodoTypeEnum.inProgress}
         <Button type="button" onClick="{() => showEdit(todo.id)}" text="Edit" className="todo-button"/>
+        {/if}
         <Button type="button" onClick="{() => showRemove(todo.id)}" text="Remove" className="todo-button"/>
+
     </div>
 </div>
 
