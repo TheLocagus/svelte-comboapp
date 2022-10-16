@@ -6,7 +6,7 @@
         font-family: Arial, sans-serif;
     }
     :global(main) {
-        background-color: #030303;
+        background-color: #444;
     }
 </style>
 

@@ -14,3 +14,9 @@ export interface TodoInterface {
   finishTime: string;
   isFinished: boolean;
 }
+
+export enum ModalTypeEnum {
+  off = 'off',
+  edit = 'edit',
+  add = 'add',
+}
