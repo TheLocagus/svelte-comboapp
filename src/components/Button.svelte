@@ -1,5 +1,4 @@
 <script lang="ts">
-  export let href = null;
   export let url = null;
   export let type = null;
   export let onClick = null;
@@ -7,13 +6,17 @@
   export let className = null;
 </script>
 
-{#if !href}
+{#if !url}
     <button type="{type}" class="{className}" on:click={onClick}>{text}</button>
 {:else}
     <a class="{className}" href="{url}">{text}</a>
 {/if}
 
 <style>
+    a {
+        text-decoration: none;
+    }
+
     .todo-button {
         width: 70px;
         margin: 1px 0;
@@ -60,4 +63,29 @@
         background-color: black;
         color: white;
     }
+
+    .todo-views-button {
+        display: block;
+        margin: 50px 30px;
+        background-color: transparent;
+        color: whitesmoke;
+        font-family: Verdana, sans-serif;
+        font-size: 40px;
+        letter-spacing: 2px;
+        cursor: pointer;
+
+    }
+
+    .todo-views-button.active {
+        text-shadow:0 0 7px orange,
+        0 0 10px orange,
+        0 0 21px orange,
+        0 0 42px #f877f8,
+        0 0 82px #e85ee8,
+        0 0 92px #ef7eef,
+        0 0 102px #ec5aec,
+        0 0 151px #ec21ec
+    }
+
+
 </style>
