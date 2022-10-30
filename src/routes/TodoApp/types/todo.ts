@@ -5,7 +5,7 @@ export enum PrioEnum {
   extreme = 'extreme',
 }
 
-export interface TodoInterface {
+export type TodoInterface = {
   id: string;
   title: string;
   description: string;
@@ -13,6 +13,7 @@ export interface TodoInterface {
   initialTime: string;
   finishTime: string;
   isFinished: boolean;
+  isFailed?: boolean;
 }
 
 export enum ModalTypeEnum {

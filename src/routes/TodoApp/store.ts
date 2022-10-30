@@ -13,7 +13,8 @@ export const todos: Writable<TodoInterface[]> = writable([
     prio: PrioEnum.low,
     initialTime: new Date().toLocaleDateString(),
     finishTime: new Date(new Date().getTime() + (10 * 24 * 60 * 60 * 1000)).toLocaleDateString(),
-    isFinished: false,
+    isFinished: true,
+    isFailed: true,
   },
   {
     id: '2',
@@ -32,6 +33,7 @@ export const todos: Writable<TodoInterface[]> = writable([
     initialTime: new Date().toLocaleDateString(),
     finishTime: new Date(new Date().getTime() + (10 * 24 * 60 * 60 * 1000)).toLocaleDateString(),
     isFinished: true,
+    isFailed: false,
   },
 ])
 

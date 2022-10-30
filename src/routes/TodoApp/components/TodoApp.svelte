@@ -24,8 +24,6 @@
 
   onMount(() => {
     parseFinishTimeValue();
-
-
   });
 
   const parseFinishTimeValue = () => {
@@ -82,22 +80,22 @@
   }
 
   const handleEditModal = (id) => {
-    todos.update(items => {
-      return items.map(item => {
-        console.log(item, id)
-        if (item.id === id) {
-          console.log(item)
-          return {
-            ...item,
-            title: titleValue,
-            description: descriptionValue,
-            finishTime: (finishTimeValue.replace('-', '.').replace('-', '.')).split('.').reverse().join('.'),
-            prio: prioValue,
-          }
-        }
-        return item;
-      })
-    });
+    const oldValues = $todos.find(obj => obj.id === id);
+    const newValues = {
+      ...oldValues,
+      title: titleValue,
+      description: descriptionValue,
+      finishTime: (finishTimeValue.replace('-', '.').replace('-', '.')).split('.').reverse().join('.'),
+      prio: prioValue,
+    }
+
+    const newArray = $todos.map(item => {
+      if(item.id === id){
+        return newValues;
+      } else return item;
+    })
+
+    todos.set(newArray);
 
     modalType = ModalTypeEnum.off;
     clearModalData();
@@ -195,7 +193,7 @@
                 <h2 class="message">Your TodoList is empty.</h2>
             {/each}
         {:else if mode === TodoTypeEnum.done}
-            {#each $todos.filter(todo => todo.isFinished) as todo, i (todo.id)}
+            {#each $todos.filter(todo => todo.isFinished && !todo.isFailed) as todo, i (todo.id)}
                 <Todo
                         todo="{todo}"
                         setColorPrio="{setColorPrio}"
@@ -216,6 +214,18 @@
             <!--                showRemove="{removeTodo}"-->
             <!--        />-->
             <!--{/each}-->
+        {:else if mode === TodoTypeEnum.abandoned}
+            {#each $todos.filter(todo => todo.isFailed) as todo, i (todo.id)}
+                <Todo
+                        todo="{todo}"
+                        setColorPrio="{setColorPrio}"
+                        showDetails="{showDetails}"
+                        showEdit="{showEdit}"
+                        showRemove="{removeTodo}"
+                />
+            {:else}
+                <h2 class="message">Your DoneList is empty.</h2>
+            {/each}
         {/if}
     </div>
 </main>
