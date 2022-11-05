@@ -31,7 +31,7 @@
 <!--    </div>-->
 <!--    {#if !todo.isFailed}-->
     <div class="todo__confirm" on:click={() => toggleFinished(todo.id)}>
-        <IconContainer>
+        <IconContainer fill={todo.isFinished} notVisible={todo.isFailed}>
             <DoneIconContainer {todo}/>
         </IconContainer>
     </div>

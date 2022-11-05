@@ -4,6 +4,7 @@
   import Todo from "../todo/components/Todo.svelte";
   import {todos} from "../store.js";
   import {TodoTypeEnum} from "../types/todo.js";
+  import IconContainer from "./IconContainer.svelte";
 
   export let mode;
   export let openAddModal;
@@ -18,7 +19,11 @@
 {#if mode === TodoTypeEnum.inProgress}
     <div class="add-todo-container">
 <!--        <Button className="add-todo" type="button" text="Add TODO" onClick="{openAddModal}"/>-->
-        <div class="plus-icon"></div>
+        <div class="plus-icon" on:click={openAddModal}>
+            <IconContainer fill={true}>
+                <span>+</span>
+            </IconContainer>
+        </div>
         <div class="text"></div>
     </div>
 {/if}
