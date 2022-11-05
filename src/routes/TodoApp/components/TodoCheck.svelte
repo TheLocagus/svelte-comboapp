@@ -11,12 +11,15 @@
   export let showDetails;
   export let showEdit;
   export let removeTodo;
+  export let toggleFinished;
 
 </script>
 
 {#if mode === TodoTypeEnum.inProgress}
     <div class="add-todo-container">
-        <Button className="add-todo" type="button" text="Add TODO" onClick="{openAddModal}"/>
+<!--        <Button className="add-todo" type="button" text="Add TODO" onClick="{openAddModal}"/>-->
+        <div class="plus-icon"></div>
+        <div class="text"></div>
     </div>
 {/if}
 <div class="todo-container">
@@ -28,6 +31,7 @@
                     {showDetails}
                     {showEdit}
                     {removeTodo}
+                    {toggleFinished}
             />
         {:else}
             <h2 class="message">Your TodoList is empty.</h2>
@@ -40,6 +44,7 @@
                     {showDetails}
                     {showEdit}
                     {removeTodo}
+                    {toggleFinished}
             />
         {:else}
             <h2 class="message">Your DoneList is empty.</h2>
@@ -52,6 +57,7 @@
                     {showDetails}
                     {showEdit}
                     {removeTodo}
+                    {toggleFinished}
             />
         {:else}
             <h2 class="message">Your DoneList is empty.</h2>
@@ -63,7 +69,6 @@
     .add-todo-container {
         height: 100%;
         width: 100%;
-        flex-grow: 1;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -71,10 +76,9 @@
 
     .todo-container {
         flex-basis: 80%;
-        margin: 0 auto;
+        margin: 100px auto 0;
         height: 100%;
-        width: 70%;
-        flex-grow: 3;
+        width: 50%;
         position: relative;
     }
 

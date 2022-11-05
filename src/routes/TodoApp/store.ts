@@ -35,5 +35,32 @@ export const todos: Writable<TodoInterface[]> = writable([
     isFinished: true,
     isFailed: false,
   },
+  {
+    id: '4',
+    title: 'Wyjść z psem',
+    description: 'Losowy opis',
+    prio: PrioEnum.low,
+    initialTime: new Date().toLocaleDateString(),
+    finishTime: new Date(new Date().getTime() + (10 * 24 * 60 * 60 * 1000)).toLocaleDateString(),
+    isFinished: false,
+  },
+  {
+    id: '5',
+    title: 'Umyć naczynia',
+    description: 'Losowy opis',
+    prio: PrioEnum.low,
+    initialTime: new Date().toLocaleDateString(),
+    finishTime: new Date(new Date().getTime() + (10 * 24 * 60 * 60 * 1000)).toLocaleDateString(),
+    isFinished: false,
+  },
+  {
+    id: '6',
+    title: 'Zrobić zakupy',
+    description: 'Losowy opis',
+    prio: PrioEnum.low,
+    initialTime: new Date().toLocaleDateString(),
+    finishTime: new Date(new Date().getTime() + (10 * 24 * 60 * 60 * 1000)).toLocaleDateString(),
+    isFinished: false,
+  },
 ])
 

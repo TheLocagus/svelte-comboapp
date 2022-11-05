@@ -132,6 +132,16 @@
         return 'extreme-prio prio';
     }
   }
+
+  const toggleFinished = (id: string) => {
+    const updatedState = [...$todos].map(item => {
+      if(item.id === id){
+        item.isFinished = !item.isFinished;
+        return item;
+      } else return item;
+    });
+    todos.set(updatedState);
+  }
 </script>
 
 <main>
@@ -181,6 +191,7 @@
             {showDetails}
             {showEdit}
             {removeTodo}
+            {toggleFinished}
     />
 </main>
 
@@ -188,10 +199,9 @@
     main {
         min-height: 100vh;
         width: 100%;
-        background-color: #111;
+        background-color: #1a1a1a;
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
     }
 
@@ -206,7 +216,4 @@
         justify-content: center;
         width: 100%;
     }
-
-
-
 </style>

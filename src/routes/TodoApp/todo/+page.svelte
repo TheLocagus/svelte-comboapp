@@ -7,8 +7,6 @@
     let pageMode;
 
     onMount(() => {
-        console.log()
-
         mode.set(TodoTypeEnum.inProgress);
         const unsubscribe = mode.subscribe(value => {
             pageMode = value;
