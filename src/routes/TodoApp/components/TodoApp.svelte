@@ -197,7 +197,7 @@
 
 <style>
     main {
-        min-height: 100vh;
+        min-height: 101vh;
         width: 100%;
         background-color: #1a1a1a;
         display: flex;
