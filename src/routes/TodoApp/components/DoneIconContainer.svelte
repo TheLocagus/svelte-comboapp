@@ -1,9 +1,9 @@
 <script lang="ts">
-    export let todo;
+    export let isFinished;
 </script>
 
 <div>
-    <img class:taskDone={todo.isFinished} src="/src/images/icons8-done.svg" alt="">
+    <img class:taskDone={isFinished} src="/src/images/icons8-done.svg" alt="">
 </div>
 
 

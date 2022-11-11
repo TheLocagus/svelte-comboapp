@@ -2,12 +2,13 @@
 
     import Button from "../../components/Button.svelte";
     import {TodoTypeEnum} from "../../types/todo.js";
-    import {mode} from "../../store.js";
-    import { fade, fly } from 'svelte/transition';
+    import {mode, todos} from "../../store.js";
+    import { fade, fly, blur, slide, crossfade
+    } from 'svelte/transition';
     import BottomArrowIcon from "./BottomArrowIcon.svelte";
     import IconContainer from "../../components/IconContainer.svelte";
     import DoneIconContainer from "../../components/DoneIconContainer.svelte";
-
+    import {quintOut} from "svelte/easing";
 
     export let todo;
     export let setColorPrio;
@@ -21,18 +22,17 @@
     const toggleExpandDetails = () => {
       expanded = !expanded;
     }
-
-    $: console.log(expanded)
+    $: console.log($todos.map(i=> i))
 </script>
 
-<div class="todo">
+<div class="todo" >
 <!--    <div class="todo__prio">-->
 <!--        <div class={setColorPrio(todo.prio)}></div>-->
 <!--    </div>-->
 <!--    {#if !todo.isFailed}-->
     <div class="todo__confirm" on:click={() => toggleFinished(todo.id)}>
-        <IconContainer fill={todo.isFinished} notVisible={todo.isFailed}>
-            <DoneIconContainer {todo}/>
+        <IconContainer fill={$todos.find(item => item.id === todo.id).isFinished} notVisible={todo.isFailed}>
+            <DoneIconContainer isFinished={$todos.find(item => item.id === todo.id).isFinished}/>
         </IconContainer>
     </div>
         <!--{/if}-->
@@ -73,6 +73,7 @@
 
 <div class="expanded-content" class:expanded>
     <div class="expanded-details">
+        <div class="description">{todo.description}</div>
     </div>
 </div>
 
@@ -227,7 +228,6 @@
         height: 200px;
         margin: 1px 0;
         display: flex;
-        align-items: center;
         padding: 15px 0;
         background-color: #444;
         color: #ded9d9;
