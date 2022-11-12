@@ -26,16 +26,11 @@
 </script>
 
 <div class="todo" >
-<!--    <div class="todo__prio">-->
-<!--        <div class={setColorPrio(todo.prio)}></div>-->
-<!--    </div>-->
-<!--    {#if !todo.isFailed}-->
     <div class="todo__confirm" on:click={() => toggleFinished(todo.id)}>
         <IconContainer fill={$todos.find(item => item.id === todo.id).isFinished} notVisible={todo.isFailed}>
             <DoneIconContainer isFinished={$todos.find(item => item.id === todo.id).isFinished}/>
         </IconContainer>
     </div>
-        <!--{/if}-->
     <div class="todo__content">
         <div class="upper-content">
             <div class="todo__title">
