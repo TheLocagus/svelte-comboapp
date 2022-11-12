@@ -68,7 +68,19 @@
 
 <div class="expanded-content" class:expanded>
     <div class="expanded-details">
-        <div class="description">{todo.description}</div>
+        <div class="description-row">
+            <div class="description">{todo.description}</div>
+        </div>
+        <div class="details-row">
+            <div class="time-summary">
+                <div class="start">Start: 11.11.22</div>
+                <div class="start">Deadline: 14.11.22</div>
+            </div>
+            <div class="handling-buttons">
+                <button>Edit</button>
+                <button>Remove</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -90,8 +102,6 @@
         align-items: flex-start;
         justify-content: center;
     }
-
-
 
     .todo__content{
         display: flex;
@@ -205,6 +215,10 @@
         transition: 0.2s;
     }
 
+    .rotate {
+        transform: rotate(-180deg);
+    }
+
     .expanded-content {
         overflow: hidden;
         max-height: 0;
@@ -223,18 +237,44 @@
         height: 200px;
         margin: 1px 0;
         display: flex;
-        padding: 15px 0;
+        flex-direction: column;
+        padding: 15px 10px;
         background-color: #444;
         color: #ded9d9;
     }
 
-    .rotate {
-        transform: rotate(-180deg);
+    .description-row {
+        flex-basis: 80%;
+        overflow: auto;
+        padding-right: 10px;
     }
 
-    /*.notExpanded {*/
-    /*    overflow: hidden;*/
-    /*    max-height: 0;*/
-    /*    transition: max-height 2s;*/
-    /*}*/
+    .details-row {
+        display: flex;
+        align-items: center;
+        flex-basis: 20%;
+        font-size: 0.9em;
+        border-top: 1px solid #1a1a1a;
+        padding-left: 5px;
+        margin-right: 15px;
+    }
+
+    .details-row .time-summary {
+        display: flex;
+    }
+
+    .description-row::-webkit-scrollbar {
+        width: 0.4rem;
+    }
+    .description-row::-webkit-scrollbar-track {
+        background-color: pink;
+        border-radius: 10px;
+    }
+    .description-row::-webkit-scrollbar-thumb {
+        background-color: deeppink;
+        border-radius: 10px;
+    }
+
+
+
 </style>
