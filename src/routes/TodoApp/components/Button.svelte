@@ -74,14 +74,14 @@
         font-size: 40px;
         letter-spacing: 2px;
         cursor: pointer;
-        text-shadow: -1px 0 orangered, 0 1px orangered, 1px 0 orangered, 0 -1px orangered;
+        text-shadow: -1px 0 deeppink, 0 1px deeppink, 1px 0 deeppink, 0 -1px deeppink;
 
     }
 
     .todo-views-button.active {
-        text-shadow:0 0 7px orange,
-        0 0 10px orange,
-        0 0 21px orange,
+        text-shadow:0 0 7px deeppink,
+        0 0 10px deeppink,
+        0 0 21px deeppink,
         0 0 42px #f877f8,
         0 0 82px #e85ee8,
         0 0 92px #ef7eef,

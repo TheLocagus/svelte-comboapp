@@ -44,6 +44,6 @@
         padding: 10px 5px;
         font-size: 18px;
         border-radius: 5px;
-        background-color: #de7249;
+        background-color: pink;
     }
 </style>
