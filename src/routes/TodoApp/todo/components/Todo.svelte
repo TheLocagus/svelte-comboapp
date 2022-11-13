@@ -9,6 +9,14 @@
     import IconContainer from "../../components/IconContainer.svelte";
     import DoneIconContainer from "../../components/DoneIconContainer.svelte";
     import {quintOut} from "svelte/easing";
+    import StartDateIcon from "../../components/StartDateIcon.svelte";
+    import EndDateIcon from "../../components/EndDateIcon.svelte";
+    import EditIcon from "../../components/EditIcon.svelte";
+    import RemoveIcon from "../../components/RemoveIcon.svelte";
+    import EditContainer from "../../components/EditContainer.svelte";
+    import RemoveContainer from "../../components/RemoveContainer.svelte";
+    import StartDateContainer from "./StartDateContainer.svelte";
+    import EndDateContainer from "./EndDateContainer.svelte";
 
     export let todo;
     export let setColorPrio;
@@ -73,12 +81,12 @@
         </div>
         <div class="details-row">
             <div class="time-summary">
-                <div class="start">Start: 11.11.22</div>
-                <div class="start">Deadline: 14.11.22</div>
+                <StartDateContainer time={todo.initialTime}/>
+                <EndDateContainer time={todo.finishTime}/>
             </div>
             <div class="handling-buttons">
-                <button>Edit</button>
-                <button>Remove</button>
+                <EditContainer/>
+                <RemoveContainer/>
             </div>
         </div>
     </div>
@@ -252,6 +260,7 @@
     .details-row {
         display: flex;
         align-items: center;
+        justify-content: space-between;
         flex-basis: 20%;
         font-size: 0.9em;
         border-top: 1px solid #1a1a1a;
@@ -276,5 +285,10 @@
     }
 
 
+
+    .handling-buttons {
+        display: flex;
+        align-items: center;
+    }
 
 </style>
