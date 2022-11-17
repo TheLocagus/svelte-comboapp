@@ -1,20 +1,17 @@
 <script>
-    import {createEventDispatcher} from 'svelte';
+    export let isOpen;
 
-    const dispatch = createEventDispatcher();
 </script>
 
+{#if isOpen}
 <div class="modal-background"></div>
 <div class="modal">
     <div class="modal-title">Add todo</div>
     <div class="modal-content">
         <slot name="modal-content"></slot>
     </div>
-    <div class="footer">
-        <slot name="modal-footer"></slot>
-    </div>
 </div>
-
+    {/if}
 <style>
     .modal-background {
         position: fixed;

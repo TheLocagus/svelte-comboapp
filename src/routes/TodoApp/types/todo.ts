@@ -5,7 +5,7 @@ export enum PrioEnum {
   extreme = 'extreme',
 }
 
-export type TodoInterface = {
+export interface TodoInterface {
   id: string;
   title: string;
   description: string;

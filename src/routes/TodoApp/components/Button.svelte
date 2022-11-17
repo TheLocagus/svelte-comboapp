@@ -1,7 +1,7 @@
 <script lang="ts">
   export let url = null;
   export let type = null;
-  export let onClick = null;
+  export let onClick;
   export let text = null;
   export let className = null;
   export let toGlow = null;
