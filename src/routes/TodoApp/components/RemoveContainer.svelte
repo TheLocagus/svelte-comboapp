@@ -1,9 +1,9 @@
 <script lang="ts">
-
 import RemoveIcon from "./RemoveIcon.svelte";
+export let click;
 </script>
 
-<div class="remove">
+<div class="remove" on:click={click}>
     <RemoveIcon height="16px"/>
 </div>
 

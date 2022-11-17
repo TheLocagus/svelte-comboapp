@@ -1,42 +1,74 @@
 <script lang="ts">
 
-    import Button from "../../components/Button.svelte";
-    import {TodoTypeEnum} from "../../types/todo.js";
-    import {mode, todos} from "../../store.js";
-    import { fade, fly, blur, slide, crossfade
-    } from 'svelte/transition';
+    import {todos} from "../../store.js";
     import BottomArrowIcon from "./BottomArrowIcon.svelte";
     import IconContainer from "../../components/IconContainer.svelte";
     import DoneIconContainer from "../../components/DoneIconContainer.svelte";
-    import {quintOut} from "svelte/easing";
-    import StartDateIcon from "../../components/StartDateIcon.svelte";
-    import EndDateIcon from "../../components/EndDateIcon.svelte";
-    import EditIcon from "../../components/EditIcon.svelte";
-    import RemoveIcon from "../../components/RemoveIcon.svelte";
     import EditContainer from "../../components/EditContainer.svelte";
     import RemoveContainer from "../../components/RemoveContainer.svelte";
     import StartDateContainer from "./StartDateContainer.svelte";
     import EndDateContainer from "./EndDateContainer.svelte";
+    import {ModalTypeEnum, PrioEnum} from "../../types/todo";
+    import Modal from "../../components/Modal.svelte";
+    import FormTodo from "../../components/FormTodo.svelte";
+    import Button from "../../components/Button.svelte";
+    import {onDestroy} from "svelte";
+    import EditModal from "../../components/EditModal.svelte";
 
     export let todo;
     export let setColorPrio;
-    export let showDetails;
-    export let showEdit;
     export let showRemove
     export let toggleFinished;
+    export let titleValue;
+    export let descriptionValue;
+    export let finishTimeValue;
+    export let prioValue;
+
+    let isOpen = false;
+    const type = ModalTypeEnum.edit;
+    let tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000), day, month, year;
+
+    const parseFinishTimeValue = () => {
+      day = '' + tomorrow.getDate();
+      month = '' + (tomorrow.getMonth() + 1);
+      year = tomorrow.getFullYear();
+
+      if (month.length < 2)
+        month = '0' + month;
+      if (day.length < 2)
+        day = '0' + day;
+
+      finishTimeValue = [year, month, day].join('-');
+    }
 
     let expanded = false;
 
     const toggleExpandDetails = () => {
       expanded = !expanded;
     }
-    $: console.log($todos.map(i=> i))
+
+    const showEdit = () => {
+      isOpen=true;
+      titleValue = todo.title;
+      descriptionValue = todo.description;
+      finishTimeValue = (todo.finishTime.replace('.', '-').replace('.', '-').split('-')).reverse().join('-');
+      prioValue = todo.prio;
+    }
+
+    const removeTodo = () => {
+      console.log(todo.id)
+      todos.update((items) => {
+        return items.filter(todos => todos.id !== todo.id);
+      })
+    }
+
 </script>
 
 <div class="todo" >
+    <EditModal {isOpen} {todo} {titleValue} {descriptionValue} {finishTimeValue} {prioValue}/>
     <div class="todo__confirm" on:click={() => toggleFinished(todo.id)}>
-        <IconContainer fill={$todos.find(item => item.id === todo.id).isFinished} notVisible={todo.isFailed}>
-            <DoneIconContainer isFinished={$todos.find(item => item.id === todo.id).isFinished}/>
+        <IconContainer fill={$todos.find(item => item.id === todo.id)?.isFinished ?? null} notVisible={todo.isFailed}>
+            <DoneIconContainer isFinished={$todos.find(item => item.id === todo.id)?.isFinished ?? null}/>
         </IconContainer>
     </div>
     <div class="todo__content">
@@ -57,15 +89,6 @@
                 <div class="time">{todo.finishTime}</div>
             </div>
         </div>
-
-<!--        <div class="todo__buttons">-->
-<!--            <Button type="button" onClick="{() => showDetails(todo.id)}" text="Details" className="todo-button"/>-->
-<!--            {#if $mode === TodoTypeEnum.inProgress}-->
-<!--                <Button type="button" onClick="{() => showEdit(todo.id)}" text="Edit" className="todo-button"/>-->
-<!--            {/if}-->
-<!--            <Button type="button" onClick="{() => showRemove(todo.id)}" text="Remove" className="todo-button"/>-->
-
-<!--        </div>-->
     </div>
     <div class="expand-arrow-content">
         <div class="expand-arrow"><span class:rotate={expanded} on:click={toggleExpandDetails}>
@@ -85,12 +108,13 @@
                 <EndDateContainer time={todo.finishTime}/>
             </div>
             <div class="handling-buttons">
-                <EditContainer/>
-                <RemoveContainer/>
+                <EditContainer click={showEdit}/>
+                <RemoveContainer click={removeTodo}/>
             </div>
         </div>
     </div>
 </div>
+
 
 <style>
 

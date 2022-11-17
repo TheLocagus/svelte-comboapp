@@ -1,8 +1,9 @@
 <script>
     import EditIcon from "./EditIcon.svelte";
+    export let click;
 </script>
 
-<div class="edit">
+<div class="edit" on:click={click}>
     <EditIcon height="16px"/>
 </div>
 

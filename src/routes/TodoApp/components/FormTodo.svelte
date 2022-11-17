@@ -1,13 +1,49 @@
 <script lang="ts">
     import {onMount} from "svelte";
-    import {PrioEnum} from "../types/todo.js";
+    import {ModalTypeEnum, PrioEnum} from "../types/todo.js";
+    import type {TodoInterface} from '../types/todo.js'
+    import Button from "./Button.svelte";
+    import {todos} from "../store";
 
-    export let titleValue = '';
-    export let descriptionValue = '';
-    export let finishTimeValue = '';
-    export let prioValue = '';
+    export let titleValue;
+    export let descriptionValue;
+    export let finishTimeValue;
+    export let prioValue: PrioEnum;
+    export let todo;
+    export let isOpen;
+    export let type: ModalTypeEnum;
+    const closeModal = () => {
+      isOpen = false;
+    }
+    const clearModalData = () => {
+      // parseFinishTimeValue()
+      titleValue;
+      descriptionValue;
+      finishTimeValue;
+      prioValue = PrioEnum.medium;
+    }
+    const handleEditModal = () => {
+      const oldValues = $todos.find?.(obj => obj.id === todo.id) ;
+      const newValues: TodoInterface = {
+        ...oldValues,
+        title: titleValue,
+        description: descriptionValue,
+        finishTime: (finishTimeValue.replace('-', '.').replace('-', '.')).split('.').reverse().join('.'),
+        prio: prioValue,
+      }
 
+      const newArray = $todos.map(item => {
+        if(item.id === todo.id){
+          return newValues;
+        } else return item;
+      });
 
+      todos.set(newArray);
+      console.log($todos)
+
+      isOpen = false;
+      clearModalData();
+    }
 </script>
 
     <form class="modal-content__form">
@@ -25,6 +61,16 @@
             <option value="{PrioEnum.extreme}">Extreme</option>
         </select>
     </form>
+<div class="modal-footer">
+    <Button type="button" onClick="{closeModal}" text="Cancel" className="footer-modal-button"/>
+    {#if type === ModalTypeEnum.edit}
+    <Button type="button" onClick="{handleEditModal}" text="Update"
+            className="footer-modal-button"/>
+        {:else if type === ModalTypeEnum.add}
+        <Button type="button" onClick="{handleEditModal}" text="Add"
+                className="footer-modal-button"/>
+        {/if}
+</div>
 
 <style>
     .modal-content__form {

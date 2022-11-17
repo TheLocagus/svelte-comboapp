@@ -3,28 +3,53 @@
   import Button from "./Button.svelte";
   import Todo from "../todo/components/Todo.svelte";
   import {todos} from "../store.js";
-  import {TodoTypeEnum} from "../types/todo.js";
+  import {ModalTypeEnum, TodoTypeEnum} from "../types/todo.js";
   import IconContainer from "./IconContainer.svelte";
   import PlusIcon from "./PlusIcon.svelte";
-  import {backOut, bounceOut, circInOut, circOut, cubicInOut, expoOut, quintOut} from "svelte/easing";
+  import { quintOut} from "svelte/easing";
   import { flip } from 'svelte/animate';
   import {fly} from 'svelte/transition'
+  import Modal from "./Modal.svelte";
+  import FormTodo from "./FormTodo.svelte";
+  import AddModal from "./AddModal.svelte";
 
   export let mode;
-  export let openAddModal;
   export let setColorPrio;
-  export let showDetails;
-  export let showEdit;
-  export let removeTodo;
   export let toggleFinished;
+  export let titleValue;
+  export let descriptionValue;
+  export let finishTimeValue;
+  export let prioValue;
+  export let modalType;
 
+  let isOpen = false;
+  const openModal = () => {
+    console.log('wchodzi')
+    isOpen = true;
+  }
 
+  $: tasks = $todos.filter(todo => !todo.isFinished);
 </script>
 
+
 {#if mode === TodoTypeEnum.inProgress}
+<!--    <Modal-->
+<!--            bind:isOpen-->
+<!--    >-->
+<!--        <div slot="modal-content" class="modal-content">-->
+<!--            <FormTodo-->
+<!--                    bind:titleValue="{titleValue}"-->
+<!--                    bind:descriptionValue="{descriptionValue}"-->
+<!--                    bind:finishTimeValue="{finishTimeValue}"-->
+<!--                    bind:prioValue="{prioValue}"-->
+<!--                    bind:isOpen-->
+<!--                    {type}-->
+<!--            />-->
+<!--        </div>-->
+<!--    </Modal>-->
+    <AddModal bind:isOpen />
     <div class="add-todo-container">
-<!--        <Button className="add-todo" type="button" text="Add TODO" onClick="{openAddModal}"/>-->
-        <div class="plus-icon" on:click={openAddModal}>
+        <div class="plus-icon" on:click={openModal}>
             <IconContainer fill={true}>
                     <PlusIcon height="15px"/>
             </IconContainer>
@@ -36,15 +61,16 @@
 {/if}
 <div class="todo-container">
     {#if mode === TodoTypeEnum.inProgress}
-        {#each $todos.filter(todo => !todo.isFinished) as todo, i (todo.id)}
+        {#each tasks as todo (todo.id)}
             <div out:fly={{x:100, duration: 600}} animate:flip="{{delay: 450, duration: 250, easing: quintOut}}">
                 <Todo
                         {todo}
                         {setColorPrio}
-                        {showDetails}
-                        {showEdit}
-                        {removeTodo}
                         {toggleFinished}
+                        bind:titleValue
+                        bind:descriptionValue
+                        bind:finishTimeValue
+                        bind:prioValue
                 />
             </div>
         {:else}
@@ -55,10 +81,12 @@
             <Todo
                     {todo}
                     {setColorPrio}
-                    {showDetails}
-                    {showEdit}
-                    {removeTodo}
                     {toggleFinished}
+                    bind:titleValue
+                    bind:descriptionValue
+                    bind:finishTimeValue
+                    bind:prioValue
+                    bind:modalType
             />
         {:else}
             <h2 class="message">Your DoneList is empty.</h2>
@@ -68,10 +96,12 @@
             <Todo
                     {todo}
                     {setColorPrio}
-                    {showDetails}
-                    {showEdit}
-                    {removeTodo}
                     {toggleFinished}
+                    bind:titleValue
+                    bind:descriptionValue
+                    bind:finishTimeValue
+                    bind:prioValue
+                    bind:modalType
             />
         {:else}
             <h2 class="message">Your DoneList is empty.</h2>
