@@ -4,7 +4,7 @@
   import {type TodoInterface, PrioEnum} from "../types/todo";
   import {todos} from "../store";
   import Button from "./Button.svelte";
-  import {onDestroy} from "svelte";
+  import {onDestroy, onMount} from "svelte";
   import {v4 as uuid} from "uuid";
   export let isOpen;
   // export let titleValue;
@@ -41,7 +41,8 @@
     closeModal();
   }
 </script>
-<Modal {isOpen}>
+
+<Modal>
     <div slot="modal-content" class="modal-content">
         <form class="modal-content__form">
             <label for="title">Title: </label>

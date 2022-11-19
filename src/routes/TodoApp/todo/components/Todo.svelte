@@ -65,7 +65,9 @@
 </script>
 
 <div class="todo" >
-    <EditModal {isOpen} {todo} {titleValue} {descriptionValue} {finishTimeValue} {prioValue}/>
+    {#if isOpen}
+    <EditModal bind:isOpen {todo} {titleValue} {descriptionValue} {finishTimeValue} {prioValue}/>
+        {/if}
     <div class="todo__confirm" on:click={() => toggleFinished(todo.id)}>
         <IconContainer fill={$todos.find(item => item.id === todo.id)?.isFinished ?? null} notVisible={todo.isFailed}>
             <DoneIconContainer isFinished={$todos.find(item => item.id === todo.id)?.isFinished ?? null}/>

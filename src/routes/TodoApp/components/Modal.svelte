@@ -1,9 +1,4 @@
-<script>
-    export let isOpen;
 
-</script>
-
-{#if isOpen}
 <div class="modal-background"></div>
 <div class="modal">
     <div class="modal-title">Add todo</div>
@@ -11,7 +6,6 @@
         <slot name="modal-content"></slot>
     </div>
 </div>
-    {/if}
 <style>
     .modal-background {
         position: fixed;

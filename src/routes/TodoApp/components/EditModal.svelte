@@ -39,11 +39,10 @@ const handleEditModal = () => {
   todos.set(newArray);
   console.log($todos)
 
-  isOpen = false;
   clearModalData();
 }
 </script>
-<Modal {isOpen}>
+<Modal>
     <div slot="modal-content" class="modal-content">
     <form class="modal-content__form">
         <label for="title">Title: </label>
