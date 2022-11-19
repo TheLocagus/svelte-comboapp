@@ -4,26 +4,23 @@
   import {type TodoInterface, PrioEnum} from "../types/todo";
   import {todos} from "../store";
   import Button from "./Button.svelte";
-  import {onDestroy, onMount} from "svelte";
+  import {onDestroy} from "svelte";
   import {v4 as uuid} from "uuid";
+  import {parseFinishTimeValue} from "../utils/parseFinishTime";
   export let isOpen;
-  // export let titleValue;
-  // export let descriptionValue;
-  // export let finishTimeValue;
-  // export let prioValue: PrioEnum;
+
   const closeModal = () => {
     isOpen = false;
   }
-  let titleValue;
-  let descriptionValue;
-  let finishTimeValue;
+  let titleValue = '';
+  let descriptionValue = '';
+  let finishTimeValue = parseFinishTimeValue();
   let prioValue: PrioEnum;
 
   onDestroy(() => {
-    // parseFinishTimeValue()
     titleValue = '';
     descriptionValue = '';
-    finishTimeValue = '';
+    finishTimeValue = parseFinishTimeValue();
     prioValue = PrioEnum.medium;
   })
 
@@ -88,5 +85,9 @@
         font-size: 18px;
         border-radius: 5px;
         background-color: pink;
+    }
+
+    .modal-footer {
+        margin: 35px 0 20px;
     }
 </style>

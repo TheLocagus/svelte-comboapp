@@ -8,16 +8,10 @@
     import RemoveContainer from "../../components/RemoveContainer.svelte";
     import StartDateContainer from "./StartDateContainer.svelte";
     import EndDateContainer from "./EndDateContainer.svelte";
-    import {ModalTypeEnum, PrioEnum} from "../../types/todo";
-    import Modal from "../../components/Modal.svelte";
-    import FormTodo from "../../components/FormTodo.svelte";
-    import Button from "../../components/Button.svelte";
-    import {onDestroy} from "svelte";
     import EditModal from "../../components/EditModal.svelte";
+    import {signPrio} from "../../utils/signPrio.js";
 
     export let todo;
-    export let setColorPrio;
-    export let showRemove
     export let toggleFinished;
     export let titleValue;
     export let descriptionValue;
@@ -25,22 +19,6 @@
     export let prioValue;
 
     let isOpen = false;
-    const type = ModalTypeEnum.edit;
-    let tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000), day, month, year;
-
-    const parseFinishTimeValue = () => {
-      day = '' + tomorrow.getDate();
-      month = '' + (tomorrow.getMonth() + 1);
-      year = tomorrow.getFullYear();
-
-      if (month.length < 2)
-        month = '0' + month;
-      if (day.length < 2)
-        day = '0' + day;
-
-      finishTimeValue = [year, month, day].join('-');
-    }
-
     let expanded = false;
 
     const toggleExpandDetails = () => {
@@ -56,7 +34,6 @@
     }
 
     const removeTodo = () => {
-      console.log(todo.id)
       todos.update((items) => {
         return items.filter(todos => todos.id !== todo.id);
       })
@@ -80,7 +57,7 @@
             </div>
         </div>
         <div class="bottom-content">
-            <div class="{setColorPrio(todo.prio)} todo-prio">
+            <div class="{signPrio(todo.prio)} todo-prio">
                 <div class="prio-icon">
                     <div>!</div>
                 </div>
@@ -117,9 +94,7 @@
     </div>
 </div>
 
-
 <style>
-
     .todo {
         margin: 2px 0;
         display: flex;

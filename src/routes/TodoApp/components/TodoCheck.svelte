@@ -9,12 +9,9 @@
   import { quintOut} from "svelte/easing";
   import { flip } from 'svelte/animate';
   import {fly} from 'svelte/transition'
-  import Modal from "./Modal.svelte";
-  import FormTodo from "./FormTodo.svelte";
   import AddModal from "./AddModal.svelte";
 
   export let mode;
-  export let setColorPrio;
   export let toggleFinished;
   export let titleValue;
   export let descriptionValue;
@@ -30,22 +27,7 @@
   $: tasks = $todos.filter(todo => !todo.isFinished);
 </script>
 
-
 {#if mode === TodoTypeEnum.inProgress}
-<!--    <Modal-->
-<!--            bind:isOpen-->
-<!--    >-->
-<!--        <div slot="modal-content" class="modal-content">-->
-<!--            <FormTodo-->
-<!--                    bind:titleValue="{titleValue}"-->
-<!--                    bind:descriptionValue="{descriptionValue}"-->
-<!--                    bind:finishTimeValue="{finishTimeValue}"-->
-<!--                    bind:prioValue="{prioValue}"-->
-<!--                    bind:isOpen-->
-<!--                    {type}-->
-<!--            />-->
-<!--        </div>-->
-<!--    </Modal>-->
     {#if isOpen}
     <AddModal bind:isOpen/>
         {/if}
@@ -66,7 +48,6 @@
             <div out:fly={{x:100, duration: 600}} animate:flip="{{delay: 450, duration: 250, easing: quintOut}}">
                 <Todo
                         {todo}
-                        {setColorPrio}
                         {toggleFinished}
                         bind:titleValue
                         bind:descriptionValue
@@ -81,7 +62,6 @@
         {#each $todos.filter(todo => todo.isFinished && !todo.isFailed) as todo, i (todo.id)}
             <Todo
                     {todo}
-                    {setColorPrio}
                     {toggleFinished}
                     bind:titleValue
                     bind:descriptionValue
@@ -96,7 +76,6 @@
         {#each $todos.filter(todo => todo.isFailed) as todo, i (todo.id)}
             <Todo
                     {todo}
-                    {setColorPrio}
                     {toggleFinished}
                     bind:titleValue
                     bind:descriptionValue
