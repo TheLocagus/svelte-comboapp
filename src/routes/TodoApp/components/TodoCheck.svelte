@@ -24,7 +24,6 @@
 
   let isOpen = false;
   const openModal = () => {
-    console.log('wchodzi')
     isOpen = true;
   }
 
@@ -47,7 +46,9 @@
 <!--            />-->
 <!--        </div>-->
 <!--    </Modal>-->
-    <AddModal bind:isOpen />
+    {#if isOpen}
+    <AddModal bind:isOpen/>
+        {/if}
     <div class="add-todo-container">
         <div class="plus-icon" on:click={openModal}>
             <IconContainer fill={true}>
