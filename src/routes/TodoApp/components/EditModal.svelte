@@ -13,13 +13,7 @@ export let todo;
 const closeModal = () => {
   isOpen = false;
 }
-const clearModalData = () => {
-  // parseFinishTimeValue()
-  titleValue;
-  descriptionValue;
-  finishTimeValue;
-  prioValue = PrioEnum.medium;
-}
+
 const handleEditModal = () => {
   const oldValues = $todos.find?.(obj => obj.id === todo.id) ;
   const newValues: TodoInterface = {
@@ -37,9 +31,8 @@ const handleEditModal = () => {
   });
 
   todos.set(newArray);
-  console.log($todos)
+  isOpen = false;
 
-  clearModalData();
 }
 </script>
 <Modal>
@@ -63,11 +56,9 @@ const handleEditModal = () => {
         <Button type="button" onClick="{closeModal}" text="Cancel" className="footer-modal-button"/>
         <Button type="button" onClick="{handleEditModal}" text="Update"
                 className="footer-modal-button"/>
-
     </div>
     </div>
 </Modal>
-
 
 <style>
     .modal-content__form {
@@ -88,5 +79,9 @@ const handleEditModal = () => {
         font-size: 18px;
         border-radius: 5px;
         background-color: pink;
+    }
+
+    .modal-footer {
+        margin: 35px 0 20px;
     }
 </style>

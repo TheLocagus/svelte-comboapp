@@ -23,6 +23,7 @@
         transform: translateX(-50%);
         width: 50%;
         max-height: 80vh;
+        color: #f5e5e5;
         background: hotpink;
         border-radius: 5px;
         z-index: 100;

@@ -4,119 +4,17 @@
   import type {TodoInterface} from "../todo"
   import {ModalTypeEnum, PrioEnum, TodoTypeEnum} from "../types/todo";
   import Button from "../components/Button.svelte";
-  import Modal from "../components/Modal.svelte";
-  import {onMount} from "svelte";
-  import FormTodo from "../components/FormTodo.svelte";
   import TodoCheck from "./TodoCheck.svelte";
+  import {parseFinishTimeValue} from "../utils/parseFinishTime";
 
   export let mode;
 
   let titleValue = '';
   let descriptionValue = '';
-  let finishTimeValue = '';
+  let finishTimeValue = parseFinishTimeValue();
   let prioValue = PrioEnum.medium;
 
-  let tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000), day, month, year;
 
-  // $:console.log(modalType)
-  // let idOfEdited = '';
-
-  onMount(() => {
-    parseFinishTimeValue();
-  });
-
-  const parseFinishTimeValue = () => {
-    day = '' + tomorrow.getDate();
-    month = '' + (tomorrow.getMonth() + 1);
-    year = tomorrow.getFullYear();
-
-    if (month.length < 2)
-      month = '0' + month;
-    if (day.length < 2)
-      day = '0' + day;
-
-    finishTimeValue = [year, month, day].join('-');
-  }
-
-  const clearModalData = () => {
-    parseFinishTimeValue()
-    titleValue = '';
-    descriptionValue = '';
-    finishTimeValue;
-    prioValue = PrioEnum.medium;
-  }
-
-
-  // const showEdit = (id) => {
-  //   modalType = ModalTypeEnum.edit;
-  //   idOfEdited = id;
-  //
-  //   const unsubscribe = todos.subscribe(items => {
-  //     const {title, description, prio, finishTime} = items.find(item => item.id === id);
-  //     titleValue = title;
-  //     descriptionValue = description;
-  //     finishTimeValue = (finishTime.replace('.', '-').replace('.', '-').split('-')).reverse().join('-');
-  //     prioValue = prio;
-  //   })
-  //   unsubscribe();
-  // }
-
-
-
-  // const handleEditModal = (id) => {
-  //   const oldValues = $todos.find(obj => obj.id === id);
-  //   const newValues = {
-  //     ...oldValues,
-  //     title: titleValue,
-  //     description: descriptionValue,
-  //     finishTime: (finishTimeValue.replace('-', '.').replace('-', '.')).split('.').reverse().join('.'),
-  //     prio: prioValue,
-  //   }
-  //
-  //
-  //   const newArray = $todos.map(item => {
-  //     if(item.id === id){
-  //       return newValues;
-  //     } else return item;
-  //   })
-  //   console.log(newArray)
-  //   todos.set(newArray);
-  //
-  //   modalType = ModalTypeEnum.off;
-  //   clearModalData();
-  // }
-
-  const handleAddModal = () => {
-    const values: TodoInterface = {
-      id: uuid(),
-      title: titleValue,
-      description: descriptionValue,
-      initialTime: new Date().toLocaleDateString(),
-      finishTime: (finishTimeValue.replace('-', '.').replace('-', '.')).split('.').reverse().join('.'),
-      isFinished: false,
-      prio: prioValue,
-    }
-    todos.update(items => [...items, values])
-    todos.subscribe(items => {
-      console.log(items)
-    })
-
-    // modalType = ModalTypeEnum.off;
-  }
-
-
-  const setColorPrio = (prio: PrioEnum) => {
-    switch (prio) {
-      case PrioEnum.low:
-        return 'low-prio prio';
-      case PrioEnum.medium:
-        return 'medium-prio prio';
-      case PrioEnum.hard:
-        return 'hard-prio prio';
-      case PrioEnum.extreme:
-        return 'extreme-prio prio';
-    }
-  }
 
   const toggleFinished = (id: string) => {
     const updatedState = [...$todos].map(item => {
@@ -139,7 +37,6 @@
     </div>
     <TodoCheck
             {mode}
-            {setColorPrio}
             {toggleFinished}
             bind:titleValue
             bind:descriptionValue
