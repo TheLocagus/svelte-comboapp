@@ -1,9 +1,6 @@
 <script lang="ts">
-  import {v4 as uuid} from 'uuid';
   import {todos} from '../store';
-  import type {TodoInterface} from "../todo"
-  import {ModalTypeEnum, PrioEnum, TodoTypeEnum} from "../types/todo";
-  import Button from "../components/Button.svelte";
+  import {PrioEnum} from "../types/todo";
   import TodoCheck from "./TodoCheck.svelte";
   import {parseFinishTimeValue} from "../utils/parseFinishTime";
 
@@ -13,8 +10,6 @@
   let descriptionValue = '';
   let finishTimeValue = parseFinishTimeValue();
   let prioValue = PrioEnum.medium;
-
-
 
   const toggleFinished = (id: string) => {
     const updatedState = [...$todos].map(item => {
