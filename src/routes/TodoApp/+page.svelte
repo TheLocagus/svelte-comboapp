@@ -1,9 +1,19 @@
 <script>
-    import Button from "./components/Button.svelte";
+    import {onMount} from "svelte";
+    import {mode} from "./store.js";
+    import {TodoTypeEnum} from "./types/todo.js";
+    import TodoApp from "./components/TodoApp.svelte";
+
+    let pageMode;
+
+    onMount(() => {
+        mode.set(TodoTypeEnum.inProgress);
+        const unsubscribe = mode.subscribe(value => {
+            pageMode = value;
+        })
+        unsubscribe();
+    })
+
 </script>
 
-<h1>Welcome to TodoApp</h1>
-<h2>This application was build in Svelte technology just for training and for fun</h2>
-<h3>Still I hope you are going to enjoy here and you will be interested with my other projects</h3>
-
-<Button url="/todoapp/todo" text="Go to the App" className="todo-button"/>
+<TodoApp mode="{pageMode}"/>
