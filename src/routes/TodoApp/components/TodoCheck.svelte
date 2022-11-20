@@ -1,9 +1,8 @@
 <script lang="ts">
 
-  import Button from "./Button.svelte";
-  import Todo from "../todo/components/Todo.svelte";
+  import Todo from "../[slug]/components/Todo.svelte";
   import {todos} from "../store.js";
-  import {ModalTypeEnum, TodoTypeEnum} from "../types/todo.js";
+  import {TodoTypeEnum} from "../types/todo.js";
   import IconContainer from "./IconContainer.svelte";
   import PlusIcon from "./PlusIcon.svelte";
   import { quintOut} from "svelte/easing";
