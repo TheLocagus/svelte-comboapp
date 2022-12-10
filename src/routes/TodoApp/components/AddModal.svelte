@@ -7,6 +7,13 @@
   import {onDestroy} from "svelte";
   import {v4 as uuid} from "uuid";
   import {parseFinishTimeValue} from "../utils/parseFinishTime";
+  import AddForm from "../[slug]/components/AddForm.svelte";
+  import { finishTimeValidation, titleValidation } from "../[slug]/utils/addFormValidation";
+  import {
+      clearAddFormValidationMessages,
+      finishDateValidationMessage,
+      titleValidationMessage
+  } from "../[slug]/store/AddForm";
   export let isOpen;
 
   const closeModal = () => {
@@ -22,9 +29,12 @@
     descriptionValue = '';
     finishTimeValue = parseFinishTimeValue();
     prioValue = PrioEnum.medium;
+    clearAddFormValidationMessages()
   })
 
   const handleAddModal = () => {
+      clearAddFormValidationMessages();
+
     const values: TodoInterface = {
       id: uuid(),
       title: titleValue,
@@ -34,31 +44,32 @@
       isFinished: false,
       prio: prioValue,
     }
+
+    titleValidation(titleValue);
+    finishTimeValidation(Number(new Date(finishTimeValue).getTime()));
+
+    if($titleValidationMessage || $finishDateValidationMessage) return;
+
     todos.update(items => [values, ...items])
     closeModal();
   }
+
+
 </script>
 
 <Modal>
     <div slot="modal-content" class="modal-content">
-        <form class="modal-content__form">
-            <label for="title">Title: </label>
-            <input id="title" type="text" bind:value={titleValue}>
-            <label for="desc">Description: </label>
-            <textarea rows="8" id="desc" type="text" bind:value={descriptionValue}/>
-            <label for="finishTime">Termin date: </label>
-            <input id="finishTime" type="date" bind:value={finishTimeValue}>
-            <label for="prio">Priority: </label>
-            <select name="prio" id="prio" bind:value={prioValue}>
-                <option value="{PrioEnum.low}">Low</option>
-                <option value="{PrioEnum.medium}">Medium</option>
-                <option value="{PrioEnum.hard}">Hard</option>
-                <option value="{PrioEnum.extreme}">Extreme</option>
-            </select>
-        </form>
+        <AddForm
+          bind:titleValue
+          bind:descriptionValue
+          bind:prioValue
+          bind:finishTimeValue
+          handleSubmit={handleAddModal}
+        />
+
         <div class="modal-footer">
             <Button type="button" onClick="{closeModal}" text="Cancel" className="footer-modal-button"/>
-            <Button type="button" onClick="{handleAddModal}" text="Add"
+            <Button type="submit" onClick="{handleAddModal}" text="Add"
                     className="footer-modal-button"/>
 
         </div>
@@ -67,25 +78,7 @@
 
 
 <style>
-    .modal-content__form {
-        display: flex;
-        flex-direction: column;
-        margin: 0 auto;
-        width: 70%;
-    }
 
-    .modal-content__form label {
-        margin: 10px 0 5px;
-    }
-
-    .modal-content__form input, textarea, select {
-        outline: none;
-        border: 1px solid black;
-        padding: 10px 5px;
-        font-size: 18px;
-        border-radius: 5px;
-        background-color: pink;
-    }
 
     .modal-footer {
         margin: 35px 0 20px;
