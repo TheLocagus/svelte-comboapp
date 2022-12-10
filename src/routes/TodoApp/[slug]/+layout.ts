@@ -1,5 +1,5 @@
-import type {LayoutLoad} from "./$types";
-import {TodoTypeEnum} from "./types/todo";
+import type { LayoutLoad } from ".svelte-kit/types/src/routes/todoapp/[slug]/$types";
+import {TodoTypeEnum} from "../types/todo";
 
 export const load: LayoutLoad = () => {
   return {

@@ -3,7 +3,7 @@ import {writable} from "svelte/store";
 import type {TodoInterface} from "./types/todo";
 import {PrioEnum, TodoTypeEnum} from "./types/todo";
 
-export const mode: Writable<TodoTypeEnum> = writable(TodoTypeEnum.inProgress);
+export const mode: Writable<TodoTypeEnum> = writable();
 
 export const todos: Writable<TodoInterface[]> = writable([
   {

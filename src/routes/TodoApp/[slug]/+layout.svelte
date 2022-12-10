@@ -1,10 +1,10 @@
 <script lang="ts">
-  import Button from "./components/Button.svelte";
-  import {mode} from "./store.js";
+  import Button from "../components/Button.svelte";
+  import {mode} from "../store.js";
   import type {LayoutData} from "./$types";
 
   export let data: LayoutData;
-
+  $: console.log(data)
 </script>
 <div class="app-container">
     <div class="todo-views-container">
