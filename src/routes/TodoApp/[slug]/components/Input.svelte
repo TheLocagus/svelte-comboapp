@@ -23,7 +23,7 @@
   {#if $validateMessage}
     <span>{$validateMessage}</span>
   {/if}
-  <input on:focusout={validateMethod} id={id} use:setType bind:value class:validate-error={$validateMessage} />
+  <input on:focusout={validateMethod} id={id} use:setType bind:value class:validate-error={$validateMessage}/>
 {/if}
 
 

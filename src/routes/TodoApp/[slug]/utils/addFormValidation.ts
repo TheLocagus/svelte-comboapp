@@ -1,6 +1,7 @@
 import { finishDateValidationMessage, titleValidationMessage } from "../store/AddForm";
 
 export const titleValidation = (value: string) => {
+  value = value.trim();
   if(!value) {
     titleValidationMessage.set('Pole nie może być puste')
   } else {
