@@ -1,9 +1,11 @@
-
+<script lang="ts">
+    export let title;
+</script>
 <div class="modal-background"></div>
 <div class="modal">
-    <div class="modal-title">Add todo</div>
+    <div class="modal-title">{title}</div>
     <div class="modal-content">
-        <slot name="modal-content"></slot>
+        <slot></slot>
     </div>
 </div>
 <style>
@@ -24,11 +26,12 @@
         width: 50%;
         max-height: 80vh;
         color: #f5e5e5;
-        background: hotpink;
+        background: #444;
         border-radius: 5px;
         z-index: 100;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
         overflow: auto;
+        border: 1px solid pink;
     }
     .modal::-webkit-scrollbar {
         width: 0.5rem;

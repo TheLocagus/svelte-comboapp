@@ -63,8 +63,4 @@
         width: 70%;
     }
 
-    .modal-content__form label {
-        margin: 10px 0 5px;
-    }
-
 </style>

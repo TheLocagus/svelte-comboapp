@@ -57,8 +57,8 @@
 
 </script>
 
-<Modal>
-    <div slot="modal-content" class="modal-content">
+<Modal title="Add task">
+    <div class="modal-content">
         <AddForm
           bind:titleValue
           bind:descriptionValue

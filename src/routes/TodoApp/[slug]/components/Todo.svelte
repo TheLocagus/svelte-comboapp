@@ -10,6 +10,7 @@
     import EndDateContainer from "./EndDateContainer.svelte";
     import EditModal from "../../components/EditModal.svelte";
     import {signPrio} from "../../utils/signPrio.js";
+    import ConfirmModal from "./ConfirmModal.svelte";
 
     export let todo;
     export let toggleFinished;
@@ -20,6 +21,7 @@
 
     let isOpen = false;
     let expanded = false;
+    let isConfirmModalOpen = false;
 
     const toggleExpandDetails = () => {
       expanded = !expanded;
@@ -33,10 +35,19 @@
       prioValue = todo.prio;
     }
 
-    const removeTodo = () => {
-      todos.update((items) => {
-        return items.filter(todos => todos.id !== todo.id);
-      })
+    const showConfirmModal = () => {
+        isConfirmModalOpen = true;
+    }
+
+    const removeTask = () => {
+        isConfirmModalOpen = false;
+        todos.update((items) => {
+          return items.filter(todos => todos.id !== todo.id);
+        })
+    }
+
+    const hideConfirmModal = () => {
+        isConfirmModalOpen = false;
     }
 
 </script>
@@ -88,11 +99,14 @@
             </div>
             <div class="handling-buttons">
                 <EditContainer click={showEdit}/>
-                <RemoveContainer click={removeTodo}/>
+                <RemoveContainer click={showConfirmModal}/>
             </div>
         </div>
     </div>
 </div>
+{#if isConfirmModalOpen}
+    <ConfirmModal taskTitle={todo.title} {removeTask} {hideConfirmModal} bind:isConfirmModalOpen/>
+{/if}
 
 <style>
     .todo {
