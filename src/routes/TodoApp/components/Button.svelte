@@ -3,7 +3,7 @@
   export let type = null;
   export let onClick;
   export let text = null;
-  export let className = null;
+  export let className = 'basic-button-style';
   export let toGlow = null;
 </script>
 
@@ -14,6 +14,18 @@
 {/if}
 
 <style>
+    .basic-button-style {
+        color: black;
+        background-color: #ccc;
+        border: 1px solid black;
+        padding: 5px 20px;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+    .basic-button-style:hover {
+        background-color: #eee;
+    }
+
     a {
         text-decoration: none;
     }

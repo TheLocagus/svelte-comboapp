@@ -46,7 +46,7 @@
         border: 1px solid red;
     }
 
-    span {
+    label + span {
         margin-left: 10px;
         font-size: 0.8rem;
         color: #8d0707;

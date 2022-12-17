@@ -35,8 +35,8 @@ const handleEditModal = () => {
 
 }
 </script>
-<Modal>
-    <div slot="modal-content" class="modal-content">
+<Modal title="Edit task">
+    <div class="modal-content">
     <form class="modal-content__form">
         <label for="title">Title: </label>
         <input id="title" type="text" bind:value={titleValue}>
