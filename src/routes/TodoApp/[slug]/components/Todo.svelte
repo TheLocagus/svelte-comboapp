@@ -14,7 +14,6 @@
 	import { emptyFunction } from '../utils/emptyFunction.js';
 
 	export let todo: TodoInterface;
-	export let toggleFinished: (id: string) => void;
 	export let titleValue: string;
 	export let descriptionValue: string;
 	export let finishTimeValue: number | string; //@todo do zmiany przy okazji parserów dat
@@ -26,6 +25,16 @@
 
 	const toggleExpandDetails = () => {
 		expanded = !expanded;
+	};
+
+	const toggleFinished = (id: string) => {
+		const updatedState = [...$todos].map((item) => {
+			if (item.id === id) {
+				item.isFinished = !item.isFinished;
+				return item;
+			} else return item;
+		});
+		todos.set(updatedState);
 	};
 
 	const showEdit = () => {
@@ -63,8 +72,7 @@
 	{/if}
 	<div class="todo__confirm">
 		<IconContainer
-			todoId={todo.id}
-			{toggleFinished}
+			onClick={() => toggleFinished(todo.id)}
 			fill={$todos.find((item) => item.id === todo.id)?.isFinished ?? false}
 			notVisible={todo.isFailed}
 		>
@@ -119,7 +127,7 @@
 	</div>
 </div>
 {#if isConfirmModalOpen}
-	<ConfirmModal taskTitle={todo.title} {removeTask} {hideConfirmModal} bind:isConfirmModalOpen />
+	<ConfirmModal taskTitle={todo.title} {removeTask} {hideConfirmModal} />
 {/if}
 
 <style>

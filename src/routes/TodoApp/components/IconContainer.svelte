@@ -1,17 +1,16 @@
 <script lang="ts">
 	import { emptyFunction } from '../[slug]/utils/emptyFunction';
 
-	export let fill;
-	export let notVisible;
-	export let todoId: string;
-	export let toggleFinished: (id: string) => void;
+	export let fill = false;
+	export let notVisible = false;
+	export let onClick: () => void = emptyFunction;
 </script>
 
 <div
 	class="icon-container"
 	class:fill
 	class:notVisible
-	on:click={() => toggleFinished(todoId)}
+	on:click={() => onClick()}
 	on:keypress={emptyFunction}
 >
 	<slot />
