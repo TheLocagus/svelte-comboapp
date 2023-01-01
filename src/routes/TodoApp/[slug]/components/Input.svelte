@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { DatePicker } from '../../utils/datePicker';
+
 	export let id: string;
 	export let type: string;
 	export let value: string | number;
@@ -13,6 +15,15 @@
 	const setType = (node: CustomInputHTMLElement) => {
 		node.type = type;
 	};
+
+	const showCalendar = () => {
+		const datePicker = new DatePicker();
+		datePicker.init();
+
+		setTimeout(() => {
+			datePicker.destroy();
+		}, 5000);
+	};
 </script>
 
 {#if type === 'date'}
@@ -25,6 +36,7 @@
 		{id}
 		use:setType
 		bind:value
+		on:click={showCalendar}
 		class:validate-error={$validateMessage}
 	/>
 {:else}
@@ -37,6 +49,7 @@
 		{id}
 		use:setType
 		bind:value
+		on:click={showCalendar}
 		class:validate-error={$validateMessage}
 	/>
 {/if}
@@ -64,5 +77,11 @@
 		font-size: 0.8rem;
 		color: #8d0707;
 		font-weight: bold;
+	}
+
+	:global(.date-picker) {
+		height: 400px;
+		width: 400px;
+		background-color: #8d0707;
 	}
 </style>
