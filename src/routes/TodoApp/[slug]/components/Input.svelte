@@ -84,4 +84,15 @@
 		width: 400px;
 		background-color: #8d0707;
 	}
+	:global(.date-picker__month) {
+		height: 100px;
+		width: 400px;
+		background-color: #078d69;
+	}
+
+	:global(.date-picker) {
+		height: 300px;
+		width: 400px;
+		background-color: #8d0779;
+	}
 </style>

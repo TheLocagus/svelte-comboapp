@@ -44,9 +44,11 @@ export class DatePicker {
 
 		this.monthSection = document.createElement('div');
 		this.monthSection.classList.add('date-picker__month');
+		this.datePickerContainer.appendChild(this.monthSection);
 
 		this.calendarSection = document.createElement('div');
 		this.calendarSection.classList.add('date-picker__calendar');
+		this.datePickerContainer.appendChild(this.calendarSection);
 	}
 
 	destroy() {
