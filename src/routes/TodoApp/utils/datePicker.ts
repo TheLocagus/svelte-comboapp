@@ -67,7 +67,16 @@ export class DatePicker {
 		table.classList.add('date-picker__table');
 		this.calendarSection.appendChild(table);
 
-		const daysHeader = document.createElement('div');
+		const daysHeader = document.createElement('tr');
+		daysHeader.classList.add('date-picker__days-header');
+		table.appendChild(daysHeader);
+
+		this.daysToShow.forEach((day) => {
+			const th = document.createElement('th');
+			th.classList.add('date-picker__th');
+			th.textContent = `${day}`;
+			daysHeader.appendChild(th);
+		});
 	}
 
 	destroy() {

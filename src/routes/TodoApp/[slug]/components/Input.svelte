@@ -121,4 +121,24 @@
 	:global(.date-picker__arrow-left:hover, .date-picker__arrow-right:hover) {
 		transform: scale(1.2);
 	}
+
+	:global(.date-picker__table) {
+		/* display: flex; */
+		/* flex-direction: column; */
+		height: 50px;
+		width: 100%;
+	}
+
+	:global(.date-picker__days-header) {
+		display: flex;
+		width: 100%;
+		height: 50px;
+	}
+
+	:global(.date-picker__th) {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+	}
 </style>
