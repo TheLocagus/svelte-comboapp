@@ -1,5 +1,3 @@
-import type { init } from 'svelte/internal';
-
 export class DatePicker {
 	now: number;
 	actualDay: number;
@@ -8,7 +6,7 @@ export class DatePicker {
 	daysToShow: string[];
 	monthsToShow: string[];
 	datePickerContainer: HTMLDivElement | null;
-	monthSection: HTMLDivElement | null;
+	datePickerHeader: HTMLDivElement | null;
 	calendarSection: HTMLDivElement | null;
 
 	constructor() {
@@ -33,7 +31,7 @@ export class DatePicker {
 			'December'
 		];
 		this.datePickerContainer = null;
-		this.monthSection = null;
+		this.datePickerHeader = null;
 		this.calendarSection = null;
 	}
 
@@ -42,16 +40,37 @@ export class DatePicker {
 		this.datePickerContainer.classList.add('date-picker');
 		document.body.appendChild(this.datePickerContainer);
 
-		this.monthSection = document.createElement('div');
-		this.monthSection.classList.add('date-picker__month');
-		this.datePickerContainer.appendChild(this.monthSection);
+		this.datePickerHeader = document.createElement('div');
+		this.datePickerHeader.classList.add('date-picker__header');
+		this.datePickerContainer.appendChild(this.datePickerHeader);
+
+		const headerArrowLeft = document.createElement('p');
+		headerArrowLeft.classList.add('date-picker__arrow-left');
+		headerArrowLeft.textContent = '<';
+		this.datePickerHeader.appendChild(headerArrowLeft);
+
+		const headerValue = document.createElement('p');
+		headerValue.classList.add('date-picker__header-value');
+		headerValue.textContent = `${this.monthsToShow[this.actualMonth]} ${this.actualYear}`;
+		this.datePickerHeader.appendChild(headerValue);
+
+		const headerArrowRight = document.createElement('p');
+		headerArrowRight.classList.add('date-picker__arrow-right');
+		headerArrowRight.textContent = '>';
+		this.datePickerHeader.appendChild(headerArrowRight);
 
 		this.calendarSection = document.createElement('div');
 		this.calendarSection.classList.add('date-picker__calendar');
 		this.datePickerContainer.appendChild(this.calendarSection);
+
+		const table = document.createElement('table');
+		table.classList.add('date-picker__table');
+		this.calendarSection.appendChild(table);
+
+		const daysHeader = document.createElement('div');
 	}
 
 	destroy() {
-		document.querySelector('.date-picker')?.remove();
+		// document.querySelector('.date-picker')?.remove();
 	}
 }

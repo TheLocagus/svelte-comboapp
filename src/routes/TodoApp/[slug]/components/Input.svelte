@@ -84,15 +84,41 @@
 		width: 400px;
 		background-color: #8d0707;
 	}
-	:global(.date-picker__month) {
-		height: 100px;
+	:global(.date-picker__header) {
+		display: flex;
+		height: 80px;
 		width: 400px;
-		background-color: #078d69;
+		background-color: bisque;
 	}
 
 	:global(.date-picker) {
 		height: 300px;
 		width: 400px;
 		background-color: #8d0779;
+	}
+
+	:global(.date-picker__arrow-left, .date-picker__header-value, .date-picker__arrow-right) {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	:global(.date-picker__arrow-left) {
+		width: 20%;
+		height: 100%;
+		cursor: pointer;
+	}
+	:global(.date-picker__header-value) {
+		width: 60%;
+		height: 100%;
+	}
+	:global(.date-picker__arrow-right) {
+		width: 20%;
+		height: 100%;
+		cursor: pointer;
+	}
+
+	:global(.date-picker__arrow-left:hover, .date-picker__arrow-right:hover) {
+		transform: scale(1.2);
 	}
 </style>
