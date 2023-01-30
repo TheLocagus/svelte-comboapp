@@ -85,6 +85,7 @@
 		background-color: #8d0707;
 	}
 	:global(.date-picker__header) {
+		position: relative;
 		display: flex;
 		height: 80px;
 		width: 400px;
@@ -97,7 +98,20 @@
 		background-color: #8d0779;
 	}
 
-	:global(.date-picker__arrow-left, .date-picker__header-value, .date-picker__arrow-right) {
+	:global(.date-picker__header__arrows) {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	:global(.date-value) {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+
+	:global(.date-picker__arrow-left, .date-picker__arrow-right) {
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -107,10 +121,6 @@
 		width: 20%;
 		height: 100%;
 		cursor: pointer;
-	}
-	:global(.date-picker__header-value) {
-		width: 60%;
-		height: 100%;
 	}
 	:global(.date-picker__arrow-right) {
 		width: 20%;
@@ -123,22 +133,25 @@
 	}
 
 	:global(.date-picker__table) {
-		/* display: flex; */
-		/* flex-direction: column; */
 		height: 50px;
 		width: 100%;
 	}
 
 	:global(.date-picker__days-header) {
-		display: flex;
-		width: 100%;
 		height: 50px;
 	}
 
 	:global(.date-picker__th) {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 100%;
+		width: calc(100% / 7);
+	}
+
+	:global(.date-picker__table .day) {
+		text-align: center;
+		line-height: 1.5rem;
+		cursor: pointer;
+	}
+
+	:global(.date-picker__table .day:hover) {
+		background-color: aqua;
 	}
 </style>
