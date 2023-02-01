@@ -58,7 +58,7 @@ export class DatePicker {
 		});
 		table.appendChild(tr);
 
-		const daysInMonth = new Date(this.actualYear, this.actualMonth, 0).getDate();
+		const daysInMonth = new Date(this.actualYear, this.actualMonth + 1, 0).getDate();
 		let firstMonthDay = new Date(this.actualYear, this.actualMonth, 1).getDay();
 		console.log(this.actualMonth);
 		if (firstMonthDay === 0) {
