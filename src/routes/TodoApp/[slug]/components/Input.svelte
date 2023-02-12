@@ -1,12 +1,17 @@
 <script lang="ts">
 	import { DatePicker } from '../../utils/datePicker';
+	import { msToDate } from '../utils/dateParsers';
 
 	export let id: string;
 	export let type: string;
 	export let value: string | number;
 	export let title: string;
-	export let validateMethod: () => void;
-	export let validateMessage;
+	export let validation: () => void = () => true;
+	export let validateMessage = '';
+
+	let isCalendarOpen = false;
+	let datePicker;
+	let inputValue = '';
 
 	interface CustomInputHTMLElement extends HTMLElement {
 		type: string;
@@ -17,7 +22,10 @@
 	};
 
 	const showCalendar = () => {
-		const datePicker = new DatePicker();
+		if (isCalendarOpen) return;
+		isCalendarOpen = true;
+		console.log(document.getElementById('calendar'));
+		datePicker = new DatePicker();
 		datePicker.init();
 
 		setTimeout(() => {
@@ -28,29 +36,46 @@
 
 {#if type === 'date'}
 	<label for={id}>{title}: </label>
-	{#if $validateMessage}
-		<span>{$validateMessage}</span>
+	{#if validateMessage}
+		<span>{validateMessage}</span>
 	{/if}
 	<input
-		on:change={validateMethod}
 		{id}
-		use:setType
-		bind:value
+		type="input"
+		readonly
+		value={inputValue || ''}
 		on:click={showCalendar}
-		class:validate-error={$validateMessage}
+		class:validate-error={validateMessage}
 	/>
+
+	<div class="calendar-wrapper">
+		<div id="calendar" />
+		{#if isCalendarOpen}
+			<div class="calendar-actions">
+				<button
+					class=""
+					on:click={(e) => {
+						e.preventDefault();
+						const timestamp = datePicker.getValue();
+						inputValue = msToDate(timestamp);
+						value = timestamp;
+						validation();
+					}}>Ok</button
+				>
+			</div>
+		{/if}
+	</div>
 {:else}
 	<label for={id}>{title}: </label>
-	{#if $validateMessage}
-		<span>{$validateMessage}</span>
+	{#if validateMessage}
+		<span>{validateMessage}</span>
 	{/if}
 	<input
-		on:focusout={validateMethod}
+		on:keyup={() => validation()}
 		{id}
 		use:setType
 		bind:value
-		on:click={showCalendar}
-		class:validate-error={$validateMessage}
+		class:validate-error={validateMessage}
 	/>
 {/if}
 
@@ -79,20 +104,17 @@
 		font-weight: bold;
 	}
 
-	:global(.date-picker) {
-		height: 400px;
-		width: 400px;
-		background-color: #8d0707;
-	}
 	:global(.date-picker__header) {
 		position: relative;
 		display: flex;
-		height: 80px;
 		width: 400px;
 		background-color: bisque;
+		flex-basis: 20%;
 	}
 
 	:global(.date-picker) {
+		display: flex;
+		flex-direction: column;
 		height: 300px;
 		width: 400px;
 		background-color: #8d0779;
@@ -109,12 +131,14 @@
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
+		color: black;
 	}
 
 	:global(.date-picker__arrow-left, .date-picker__arrow-right) {
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		color: black;
 	}
 
 	:global(.date-picker__arrow-left) {
@@ -132,8 +156,12 @@
 		transform: scale(1.2);
 	}
 
+	:global(.date-picker__calendar) {
+		flex-basis: 70%;
+	}
+
 	:global(.date-picker__table) {
-		height: 50px;
+		/* height: 50px; */
 		width: 100%;
 	}
 
@@ -153,5 +181,27 @@
 
 	:global(.date-picker__table .day:hover) {
 		background-color: aqua;
+	}
+
+	:global(.date-picker__confirm-div) {
+		flex-basis: 10%;
+		background-color: aqua;
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+	}
+
+	:global(.date-picker__confirm-button) {
+		margin-right: 10px;
+		font-size: 0.8rem;
+		border: 1px solid black;
+		background-color: white;
+		border-radius: 5px;
+		padding: 2px 5px;
+		cursor: pointer;
+	}
+
+	:global(.day-active) {
+		background-color: gold;
 	}
 </style>

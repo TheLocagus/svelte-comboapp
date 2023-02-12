@@ -5,10 +5,11 @@
 	export let text: string;
 	export let className = 'basic-button-style';
 	export let toGlow = false;
+	export let disabled = false;
 </script>
 
 {#if !url && onClick}
-	<button {type} class={className} on:click={onClick}>{text}</button>
+	<button {type} class={className} on:click={onClick} {disabled}>{text}</button>
 {:else}
 	<a class={className} class:active={toGlow} href={url}>{text}</a>
 {/if}
@@ -62,7 +63,8 @@
 		border: 1px solid orangered;
 	}
 
-	.footer-modal-button {
+	.footer-modal-button,
+	.disabled {
 		height: 2.5rem;
 		width: 5.5rem;
 		margin: 0 0 0 10px;
@@ -75,6 +77,10 @@
 	.footer-modal-button:hover {
 		background-color: black;
 		color: white;
+	}
+
+	.disabled:hover {
+		cursor: not-allowed;
 	}
 
 	.todo-views-button {

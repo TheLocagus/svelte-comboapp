@@ -5,11 +5,14 @@ export class DatePicker {
 	actualYear: number;
 	daysToShow: string[];
 	monthsToShow: string[];
+	value: number;
 	datePickerContainer: HTMLDivElement | null;
 	datePickerHeader: HTMLDivElement | null;
 	calendarSection: HTMLDivElement | null;
 	arrowsDiv: HTMLDivElement | null;
 	headerValueDiv: HTMLDivElement | null;
+	confirmDiv: HTMLDivElement | null;
+	confirmButton: HTMLButtonElement | null;
 
 	constructor() {
 		this.now = new Date().getTime();
@@ -37,6 +40,9 @@ export class DatePicker {
 		this.calendarSection = null;
 		this.arrowsDiv = null;
 		this.headerValueDiv = null;
+		this.confirmDiv = null;
+		this.confirmButton = null;
+		this.value = 0;
 	}
 
 	createCalendarTable() {
@@ -137,16 +143,24 @@ export class DatePicker {
 				(e.target as HTMLElement).tagName.toLowerCase() === 'td' &&
 				(e.target as HTMLElement).classList.contains('day')
 			) {
-				alert(e.target?.dayNr + '-' + (this.actualMonth + 1) + '-' + this.actualYear);
+				const alreadyActive = document.querySelector('.day-active');
+				if (alreadyActive) alreadyActive.classList.remove('day-active');
+				this.value = 0;
+				this.value = new Date(this.actualYear, this.actualMonth, e.target?.dayNr).getTime();
+				(e.target as HTMLElement).classList.add('day-active');
 			}
 		});
 	}
 
+	getValue() {
+		return this.value;
+	}
+
 	init() {
+		const calendar = document.getElementById('calendar');
 		this.datePickerContainer = document.createElement('div');
 		this.datePickerContainer.classList.add('date-picker');
-		document.body.appendChild(this.datePickerContainer);
-
+		calendar?.appendChild(this.datePickerContainer);
 		this.datePickerHeader = document.createElement('div');
 		this.datePickerHeader.classList.add('date-picker__header');
 		this.datePickerContainer.appendChild(this.datePickerHeader);
@@ -165,6 +179,7 @@ export class DatePicker {
 		this.calendarSection = document.createElement('div');
 		this.calendarSection.classList.add('date-picker__calendar');
 		this.datePickerContainer.appendChild(this.calendarSection);
+
 		this.createCalendarTable();
 		this.bindTableDaysEvent();
 	}
