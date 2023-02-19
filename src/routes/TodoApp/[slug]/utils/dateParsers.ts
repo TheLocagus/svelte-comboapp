@@ -1,5 +1,3 @@
-import { finishTimeValidation } from './addFormValidation';
-
 export const msToDate = (timestamp: number) => {
 	if (!timestamp) return '';
 	const date = new Date(timestamp);

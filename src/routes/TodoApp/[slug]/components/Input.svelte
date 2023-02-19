@@ -6,11 +6,11 @@
 	export let type: string;
 	export let value: string | number;
 	export let title: string;
-	export let validation: () => void = () => true;
+	export let validation: () => Promise<void>;
 	export let validateMessage = '';
 
 	let isCalendarOpen = false;
-	let datePicker;
+	let datePicker: DatePicker;
 	let inputValue = '';
 
 	interface CustomInputHTMLElement extends HTMLElement {
@@ -22,15 +22,12 @@
 	};
 
 	const showCalendar = () => {
+		console.log(isCalendarOpen);
 		if (isCalendarOpen) return;
 		isCalendarOpen = true;
 		console.log(document.getElementById('calendar'));
 		datePicker = new DatePicker();
 		datePicker.init();
-
-		setTimeout(() => {
-			datePicker.destroy();
-		}, 5000);
 	};
 </script>
 
@@ -39,6 +36,30 @@
 	{#if validateMessage}
 		<span>{validateMessage}</span>
 	{/if}
+
+	<div class="calendar-wrapper">
+		<div id="calendar" />
+		{#if isCalendarOpen}
+			<div class="calendar-actions">
+				<button
+					class=""
+					on:click={async (e) => {
+						e.preventDefault();
+
+						const timestamp = datePicker.getValue();
+						inputValue = msToDate(timestamp);
+						value = timestamp;
+						await validation();
+						if (!validateMessage) {
+							isCalendarOpen = false;
+							datePicker.destroy();
+						}
+					}}>Ok</button
+				>
+			</div>
+		{/if}
+	</div>
+
 	<input
 		{id}
 		type="input"
@@ -47,24 +68,6 @@
 		on:click={showCalendar}
 		class:validate-error={validateMessage}
 	/>
-
-	<div class="calendar-wrapper">
-		<div id="calendar" />
-		{#if isCalendarOpen}
-			<div class="calendar-actions">
-				<button
-					class=""
-					on:click={(e) => {
-						e.preventDefault();
-						const timestamp = datePicker.getValue();
-						inputValue = msToDate(timestamp);
-						value = timestamp;
-						validation();
-					}}>Ok</button
-				>
-			</div>
-		{/if}
-	</div>
 {:else}
 	<label for={id}>{title}: </label>
 	{#if validateMessage}
@@ -107,8 +110,8 @@
 	:global(.date-picker__header) {
 		position: relative;
 		display: flex;
-		width: 400px;
-		background-color: bisque;
+		width: 270px;
+		background-color: #008080;
 		flex-basis: 20%;
 	}
 
@@ -116,8 +119,8 @@
 		display: flex;
 		flex-direction: column;
 		height: 300px;
-		width: 400px;
-		background-color: #8d0779;
+		width: 270px;
+		background-color: #008080;
 	}
 
 	:global(.date-picker__header__arrows) {
@@ -131,14 +134,15 @@
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-		color: black;
+		color: #f5f5f5;
+		font-size: 0.9rem;
 	}
 
 	:global(.date-picker__arrow-left, .date-picker__arrow-right) {
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		color: black;
+		color: #f5f5f5;
 	}
 
 	:global(.date-picker__arrow-left) {
@@ -157,19 +161,20 @@
 	}
 
 	:global(.date-picker__calendar) {
+		display: flex;
 		flex-basis: 70%;
 	}
 
 	:global(.date-picker__table) {
-		/* height: 50px; */
 		width: 100%;
 	}
 
 	:global(.date-picker__days-header) {
-		height: 50px;
+		height: 40px;
 	}
 
 	:global(.date-picker__th) {
+		font-size: 0.9rem;
 		width: calc(100% / 7);
 	}
 
@@ -180,7 +185,7 @@
 	}
 
 	:global(.date-picker__table .day:hover) {
-		background-color: aqua;
+		background-color: #ff69b4;
 	}
 
 	:global(.date-picker__confirm-div) {
@@ -202,6 +207,15 @@
 	}
 
 	:global(.day-active) {
-		background-color: gold;
+		background-color: #87cefa;
+	}
+
+	:global(.calendar-wrapper) {
+		position: relative;
+	}
+	:global(#calendar, .calendar-actions) {
+		position: absolute;
+		bottom: 0;
+		right: 0;
 	}
 </style>

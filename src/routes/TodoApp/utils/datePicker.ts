@@ -153,7 +153,7 @@ export class DatePicker {
 	}
 
 	getValue() {
-		return this.value;
+		return this.value + 23 * 60 * 60 * 1000 + 59 * 60 * 1000;
 	}
 
 	init() {
@@ -185,6 +185,6 @@ export class DatePicker {
 	}
 
 	destroy() {
-		// document.querySelector('.date-picker')?.remove();
+		document.querySelector('.date-picker')?.remove();
 	}
 }

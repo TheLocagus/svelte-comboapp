@@ -23,7 +23,7 @@
 	let titleValidateMessage = '';
 	let dateValidateMessage = '';
 
-	const titleValidation = () => {
+	const titleValidation = async () => {
 		const value = titleValue;
 		if (!value.toString().trim()) {
 			titleValidateMessage = 'Puste pole.';
@@ -34,9 +34,13 @@
 		}
 	};
 
-	const finishTimeValidation = () => {
+	const finishTimeValidation = async () => {
 		const value = finishTimeValue;
-		value <= new Date().getTime()
+		console.log({
+			value,
+			data: new Date().getTime()
+		});
+		value < new Date().getTime()
 			? (dateValidateMessage = 'Podałeś datę z przeszłości')
 			: (dateValidateMessage = '');
 	};
