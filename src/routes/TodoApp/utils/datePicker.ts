@@ -3,6 +3,8 @@ export class DatePicker {
 	actualDay: number;
 	actualMonth: number;
 	actualYear: number;
+	hours: number;
+	minutes: number;
 	daysToShow: string[];
 	monthsToShow: string[];
 	value: number;
@@ -19,6 +21,8 @@ export class DatePicker {
 		this.actualDay = new Date(this.now).getDay();
 		this.actualMonth = new Date(this.now).getMonth();
 		this.actualYear = new Date(this.now).getFullYear();
+		this.minutes = new Date(this.now).getMinutes();
+		this.hours = new Date(this.now).getHours();
 
 		this.daysToShow = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
 		this.monthsToShow = [
@@ -47,6 +51,45 @@ export class DatePicker {
 
 	createCalendarTable() {
 		this.calendarSection ? (this.calendarSection.innerHTML = '') : null;
+
+		const clockDiv = document.createElement('div');
+		clockDiv.classList.add('date-picker__clock');
+
+		const hoursInput = document.createElement('input');
+		const minutesInput = document.createElement('input');
+
+		hoursInput.setAttribute('type', 'text');
+		hoursInput.setAttribute('maxlength', '2');
+		hoursInput.ariaValueMax = '2';
+
+		minutesInput.setAttribute('type', 'text');
+		minutesInput.setAttribute('maxlength', '2');
+
+		hoursInput.value = this.hours.toString();
+		minutesInput.value = this.minutes.toString();
+
+		hoursInput.addEventListener('keydown', (e) => {
+			if (isNaN(Number(e.key)) && e.key.length === 1) e.preventDefault();
+		});
+
+		minutesInput.addEventListener('keydown', (e) => {
+			if (isNaN(Number(e.key)) && e.key.length === 1) e.preventDefault();
+		});
+
+		hoursInput.addEventListener('input', (e) => {
+			if (Number(e.target.value) >= 24) {
+				e.target.value = '00';
+			}
+		});
+
+		minutesInput.addEventListener('input', (e) => {
+			if (Number(e.target.value) >= 60) {
+				e.target.value = '00';
+			}
+		});
+
+		clockDiv.appendChild(hoursInput);
+		clockDiv.appendChild(minutesInput);
 
 		const table = document.createElement('table');
 		table.classList.add('date-picker__table');
@@ -95,7 +138,9 @@ export class DatePicker {
 
 			tr.appendChild(td);
 		}
+
 		table.appendChild(tr);
+		this.calendarSection?.appendChild(clockDiv);
 		this.calendarSection?.appendChild(table);
 	}
 

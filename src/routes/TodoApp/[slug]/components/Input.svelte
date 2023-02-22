@@ -162,7 +162,34 @@
 
 	:global(.date-picker__calendar) {
 		display: flex;
+		flex-direction: column;
 		flex-basis: 70%;
+	}
+
+	:global(input::-webkit-outer-spin-button),
+	:global(input::-webkit-inner-spin-button) {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+
+	:global(.date-picker__clock) {
+		display: flex;
+		justify-content: center;
+	}
+
+	:global(.date-picker__clock input) {
+		text-align: center;
+		width: 50px;
+		padding: 10px 0;
+		font-size: 1.1rem;
+		background-color: #049a9a;
+		border: 1px solid #f5e5e5;
+		color: #f5e5e5;
+		outline: none;
+	}
+
+	:global(.date-picker__clock input:nth-child(1)) {
+		border-right: none;
 	}
 
 	:global(.date-picker__table) {
