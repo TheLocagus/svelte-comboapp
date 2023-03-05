@@ -3,8 +3,8 @@ export class DatePicker {
 	actualDay: number;
 	actualMonth: number;
 	actualYear: number;
-	hours: number;
-	minutes: number;
+	hours: string;
+	minutes: string;
 	daysToShow: string[];
 	monthsToShow: string[];
 	value: number;
@@ -21,8 +21,8 @@ export class DatePicker {
 		this.actualDay = new Date(this.now).getDay();
 		this.actualMonth = new Date(this.now).getMonth();
 		this.actualYear = new Date(this.now).getFullYear();
-		this.minutes = new Date(this.now).getMinutes();
-		this.hours = new Date(this.now).getHours();
+		this.minutes = new Date(this.now).getMinutes().toString().padStart(2, '0');
+		this.hours = new Date(this.now).getHours().toString().padStart(2, '0');
 
 		this.daysToShow = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
 		this.monthsToShow = [
@@ -68,25 +68,64 @@ export class DatePicker {
 		hoursInput.value = this.hours.toString();
 		minutesInput.value = this.minutes.toString();
 
-		hoursInput.addEventListener('keydown', (e) => {
-			if (isNaN(Number(e.key)) && e.key.length === 1) e.preventDefault();
-		});
+		hoursInput.addEventListener('keydown', (e: Event) => {
+			if (!e.target) return;
+			if (isNaN(Number((e as KeyboardEvent).key)) && (e as KeyboardEvent).key.length === 1)
+				e.preventDefault();
 
-		minutesInput.addEventListener('keydown', (e) => {
-			if (isNaN(Number(e.key)) && e.key.length === 1) e.preventDefault();
-		});
-
-		hoursInput.addEventListener('input', (e) => {
-			if (Number(e.target.value) >= 24) {
-				e.target.value = '00';
+			if (
+				(e.target as HTMLInputElement).value.length === 2 &&
+				(e as KeyboardEvent).key.length === 1
+			) {
+				(e.target as HTMLInputElement).value = `${(e.target as HTMLInputElement).value[1]}${
+					(e as KeyboardEvent).key
+				}`;
+				if (Number((e.target as HTMLInputElement).value) >= 24)
+					(e.target as HTMLInputElement).value = '00';
 			}
 		});
 
-		minutesInput.addEventListener('input', (e) => {
-			if (Number(e.target.value) >= 60) {
-				e.target.value = '00';
+		minutesInput.addEventListener('keydown', (e: Event) => {
+			console.log((e as KeyboardEvent).key);
+			if (isNaN(Number((e as KeyboardEvent).key)) && (e as KeyboardEvent).key.length === 1)
+				e.preventDefault();
+			if (
+				(e.target as HTMLInputElement).value.length === 2 &&
+				(e as KeyboardEvent).key.length === 1
+			) {
+				(e.target as HTMLInputElement).value = `${(e.target as HTMLInputElement).value[1]}${
+					(e as KeyboardEvent).key
+				}`;
+				if (Number((e.target as HTMLInputElement).value) >= 60)
+					(e.target as HTMLInputElement).value = '00';
 			}
 		});
+
+		hoursInput.addEventListener('keyup', (e) => {
+			(e.target as HTMLInputElement).value = (e.target as HTMLInputElement).value.padStart(2, '0');
+			this.hours = (e.target as HTMLInputElement).value;
+		});
+		minutesInput.addEventListener('keyup', (e) => {
+			(e.target as HTMLInputElement).value = (e.target as HTMLInputElement).value.padStart(2, '0');
+			this.minutes = (e.target as HTMLInputElement).value;
+		});
+
+		// hoursInput.addEventListener('input', (e) => {
+		// 	console.log('input', e.target.value);
+		// 	if (Number(e.target.value) >= 24) {
+		// 		e.target.value = '00';
+		// 	}
+		// 	e.target.value = e.target.value.padStart(2, '0');
+		// 	this.hours = e.target.value;
+		// });
+
+		// minutesInput.addEventListener('input', (e) => {
+		// 	if (Number(e.target.value) >= 60) {
+		// 		e.target.value = '00';
+		// 	}
+		// 	console.log('test');
+		// 	this.minutes = e.target.value.padStart(2, '0');
+		// });
 
 		clockDiv.appendChild(hoursInput);
 		clockDiv.appendChild(minutesInput);
