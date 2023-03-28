@@ -45,7 +45,6 @@
 					class=""
 					on:click={async (e) => {
 						e.preventDefault();
-
 						const timestamp = datePicker.getValue();
 						inputValue = msToDate(timestamp);
 						value = timestamp;

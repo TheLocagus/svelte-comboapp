@@ -38,9 +38,9 @@
 		const value = finishTimeValue;
 		console.log({
 			value,
-			data: new Date().getTime()
+			data: new Date(Date.now()).setSeconds(0, 0)
 		});
-		value < new Date().getTime()
+		value < new Date(Date.now()).setSeconds(0, 0)
 			? (dateValidateMessage = 'Podałeś datę z przeszłości')
 			: (dateValidateMessage = '');
 	};

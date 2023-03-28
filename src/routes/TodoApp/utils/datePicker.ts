@@ -69,10 +69,10 @@ export class DatePicker {
 		minutesInput.value = this.minutes.toString();
 
 		hoursInput.addEventListener('keydown', (e: Event) => {
+			e.preventDefault();
 			if (!e.target) return;
 			if (isNaN(Number((e as KeyboardEvent).key)) && (e as KeyboardEvent).key.length === 1)
-				e.preventDefault();
-
+				return false;
 			if (
 				(e.target as HTMLInputElement).value.length === 2 &&
 				(e as KeyboardEvent).key.length === 1
@@ -80,15 +80,20 @@ export class DatePicker {
 				(e.target as HTMLInputElement).value = `${(e.target as HTMLInputElement).value[1]}${
 					(e as KeyboardEvent).key
 				}`;
+				console.log('2');
+				console.log(isNaN(Number((e as KeyboardEvent).key)));
+				console.log((e as KeyboardEvent).key.length === 1);
+
 				if (Number((e.target as HTMLInputElement).value) >= 24)
 					(e.target as HTMLInputElement).value = '00';
 			}
 		});
 
 		minutesInput.addEventListener('keydown', (e: Event) => {
+			e.preventDefault();
 			console.log((e as KeyboardEvent).key);
 			if (isNaN(Number((e as KeyboardEvent).key)) && (e as KeyboardEvent).key.length === 1)
-				e.preventDefault();
+				return false;
 			if (
 				(e.target as HTMLInputElement).value.length === 2 &&
 				(e as KeyboardEvent).key.length === 1
@@ -110,33 +115,14 @@ export class DatePicker {
 			this.minutes = (e.target as HTMLInputElement).value;
 		});
 
-		// hoursInput.addEventListener('input', (e) => {
-		// 	console.log('input', e.target.value);
-		// 	if (Number(e.target.value) >= 24) {
-		// 		e.target.value = '00';
-		// 	}
-		// 	e.target.value = e.target.value.padStart(2, '0');
-		// 	this.hours = e.target.value;
-		// });
-
-		// minutesInput.addEventListener('input', (e) => {
-		// 	if (Number(e.target.value) >= 60) {
-		// 		e.target.value = '00';
-		// 	}
-		// 	console.log('test');
-		// 	this.minutes = e.target.value.padStart(2, '0');
-		// });
-
 		clockDiv.appendChild(hoursInput);
 		clockDiv.appendChild(minutesInput);
 
 		const table = document.createElement('table');
 		table.classList.add('date-picker__table');
-		// this.calendarSection?.appendChild(table);
 
 		let tr = document.createElement('tr');
 		tr.classList.add('date-picker__days-header');
-		// table.appendChild(tr);
 
 		this.daysToShow.forEach((day) => {
 			const th = document.createElement('th');
@@ -237,7 +223,9 @@ export class DatePicker {
 	}
 
 	getValue() {
-		return this.value + 23 * 60 * 60 * 1000 + 59 * 60 * 1000;
+		const value =
+			this.value + Number(this.hours) * 60 * 60 * 1000 + Number(this.minutes) * 60 * 1000;
+		return value;
 	}
 
 	init() {
