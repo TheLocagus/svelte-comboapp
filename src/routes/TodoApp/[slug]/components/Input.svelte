@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { finishTimeStore } from '../../store';
 	import { DatePicker } from '../../utils/datePicker';
 	import { msToDate } from '../utils/dateParsers';
 
@@ -9,7 +10,7 @@
 	export let validation: () => Promise<void>;
 	export let validateMessage = '';
 
-	let isCalendarOpen = false;
+	// let isCalendarOpen = false;
 	let datePicker: DatePicker;
 	let inputValue = '';
 
@@ -22,10 +23,7 @@
 	};
 
 	const showCalendar = () => {
-		console.log(isCalendarOpen);
-		if (isCalendarOpen) return;
-		isCalendarOpen = true;
-		console.log(document.getElementById('calendar'));
+		if (document.querySelector('.date-picker')) return;
 		datePicker = new DatePicker();
 		datePicker.init();
 	};
@@ -39,7 +37,7 @@
 
 	<div class="calendar-wrapper">
 		<div id="calendar" />
-		{#if isCalendarOpen}
+		<!-- {#if isCalendarOpen}
 			<div class="calendar-actions">
 				<button
 					class=""
@@ -56,14 +54,14 @@
 					}}>Ok</button
 				>
 			</div>
-		{/if}
+		{/if} -->
 	</div>
 
 	<input
 		{id}
 		type="input"
 		readonly
-		value={inputValue || ''}
+		value={$finishTimeStore || ''}
 		on:click={showCalendar}
 		class:validate-error={validateMessage}
 	/>

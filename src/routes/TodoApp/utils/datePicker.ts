@@ -1,3 +1,7 @@
+import { finishTimeStore } from '../store';
+import { finishTimeValidation } from '../[slug]/utils/addFormValidation';
+import { msToDate } from '../[slug]/utils/dateParsers';
+
 export class DatePicker {
 	now: number;
 	actualDay: number;
@@ -10,7 +14,10 @@ export class DatePicker {
 	value: number;
 	datePickerContainer: HTMLDivElement | null;
 	datePickerHeader: HTMLDivElement | null;
+	validateMessageSection: HTMLDivElement | null;
+	validateMessageSpan: HTMLSpanElement | null;
 	calendarSection: HTMLDivElement | null;
+	actionSection: HTMLDivElement | null;
 	arrowsDiv: HTMLDivElement | null;
 	headerValueDiv: HTMLDivElement | null;
 	confirmDiv: HTMLDivElement | null;
@@ -41,7 +48,10 @@ export class DatePicker {
 		];
 		this.datePickerContainer = null;
 		this.datePickerHeader = null;
+		this.validateMessageSection = null;
+		this.validateMessageSpan = null;
 		this.calendarSection = null;
+		this.actionSection = null;
 		this.arrowsDiv = null;
 		this.headerValueDiv = null;
 		this.confirmDiv = null;
@@ -248,9 +258,46 @@ export class DatePicker {
 		this.datePickerHeader.appendChild(this.arrowsDiv);
 		this.datePickerHeader.appendChild(this.headerValueDiv);
 
+		this.validateMessageSection = document.createElement('div');
+		this.validateMessageSection.classList.add('date-picker__validate-message');
+		this.datePickerContainer.appendChild(this.validateMessageSection);
+		this.validateMessageSpan = document.createElement('span');
+		this.datePickerContainer.appendChild(this.validateMessageSpan);
+
 		this.calendarSection = document.createElement('div');
 		this.calendarSection.classList.add('date-picker__calendar');
 		this.datePickerContainer.appendChild(this.calendarSection);
+
+		this.actionSection = document.createElement('div');
+		this.actionSection.classList.add('date-picker__actions');
+		this.datePickerContainer.appendChild(this.actionSection);
+
+		this.confirmButton = document.createElement('button');
+		this.confirmButton.classList.add('confirm-button');
+		this.confirmButton.innerText = 'Potwierdź';
+		this.confirmButton.addEventListener('click', (e) => {
+			e.preventDefault();
+			if (!this.value) return;
+
+			const timestamp = this.getValue();
+			console.log(timestamp);
+			if (finishTimeValidation(timestamp)) {
+				//todo add validation message
+				if (!this.validateMessageSpan) return;
+				this.validateMessageSpan.innerText = 'Błąd walidacji';
+				return;
+			} else {
+				if (!this.validateMessageSpan) return;
+				this.validateMessageSpan.innerText = '';
+			}
+			const inputValue = msToDate(timestamp);
+			finishTimeStore.set(inputValue);
+			// value = timestamp;
+			// if (!validateMessage) {
+			this.destroy();
+			//
+		});
+		this.actionSection.appendChild(this.confirmButton);
 
 		this.createCalendarTable();
 		this.bindTableDaysEvent();
