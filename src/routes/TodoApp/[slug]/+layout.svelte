@@ -21,6 +21,8 @@
 </div>
 
 <style>
+	/* @import 'global.css'; */
+
 	.app-container {
 		min-height: 101vh;
 		width: 100%;

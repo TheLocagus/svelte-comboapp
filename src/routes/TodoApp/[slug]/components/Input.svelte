@@ -107,15 +107,14 @@
 	:global(.date-picker__header) {
 		position: relative;
 		display: flex;
+		padding: 20px 0;
 		width: 270px;
 		background-color: #008080;
-		flex-basis: 20%;
 	}
 
 	:global(.date-picker) {
 		display: flex;
 		flex-direction: column;
-		height: 300px;
 		width: 270px;
 		background-color: #008080;
 	}
@@ -160,7 +159,6 @@
 	:global(.date-picker__calendar) {
 		display: flex;
 		flex-direction: column;
-		flex-basis: 70%;
 	}
 
 	:global(input::-webkit-outer-spin-button),
@@ -209,7 +207,7 @@
 	}
 
 	:global(.date-picker__table .day:hover) {
-		background-color: #ff69b4;
+		background-color: pink;
 	}
 
 	:global(.date-picker__confirm-div) {

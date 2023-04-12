@@ -22,6 +22,7 @@ export class DatePicker {
 	headerValueDiv: HTMLDivElement | null;
 	confirmDiv: HTMLDivElement | null;
 	confirmButton: HTMLButtonElement | null;
+	cancelButton: HTMLButtonElement | null;
 
 	constructor() {
 		this.now = new Date().getTime();
@@ -56,6 +57,7 @@ export class DatePicker {
 		this.headerValueDiv = null;
 		this.confirmDiv = null;
 		this.confirmButton = null;
+		this.cancelButton = null;
 		this.value = 0;
 	}
 
@@ -262,7 +264,7 @@ export class DatePicker {
 		this.validateMessageSection.classList.add('date-picker__validate-message');
 		this.datePickerContainer.appendChild(this.validateMessageSection);
 		this.validateMessageSpan = document.createElement('span');
-		this.datePickerContainer.appendChild(this.validateMessageSpan);
+		this.validateMessageSection.appendChild(this.validateMessageSpan);
 
 		this.calendarSection = document.createElement('div');
 		this.calendarSection.classList.add('date-picker__calendar');
@@ -271,6 +273,15 @@ export class DatePicker {
 		this.actionSection = document.createElement('div');
 		this.actionSection.classList.add('date-picker__actions');
 		this.datePickerContainer.appendChild(this.actionSection);
+
+		this.cancelButton = document.createElement('button');
+		this.cancelButton.classList.add('cancel-button');
+		this.cancelButton.innerText = 'Anuluj';
+		this.cancelButton.addEventListener('click', (e) => {
+			e.preventDefault();
+			this.destroy();
+		});
+		this.actionSection.appendChild(this.cancelButton);
 
 		this.confirmButton = document.createElement('button');
 		this.confirmButton.classList.add('confirm-button');
