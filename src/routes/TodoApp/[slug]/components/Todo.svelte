@@ -27,6 +27,8 @@
 		expanded = !expanded;
 	};
 
+	$: console.log('Todo.svelte', finishTimeValue);
+
 	const toggleFinished = (id: string) => {
 		const updatedState = [...$todos].map((item) => {
 			if (item.id === id) {
@@ -41,12 +43,7 @@
 		isOpen = true;
 		titleValue = todo.title;
 		descriptionValue = todo.description;
-		finishTimeValue = todo.finishTime
-			.replace('.', '-')
-			.replace('.', '-')
-			.split('-')
-			.reverse()
-			.join('-');
+		finishTimeValue = todo.finishTime;
 		prioValue = todo.prio;
 	};
 

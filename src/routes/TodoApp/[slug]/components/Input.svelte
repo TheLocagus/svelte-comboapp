@@ -1,18 +1,10 @@
 <script lang="ts">
-	import { finishTimeStore } from '../../store';
-	import { DatePicker } from '../../utils/datePicker';
-	import { msToDate } from '../utils/dateParsers';
-
 	export let id: string;
 	export let type: string;
 	export let value: string | number;
 	export let title: string;
 	export let validation: () => Promise<void>;
 	export let validateMessage = '';
-
-	// let isCalendarOpen = false;
-	let datePicker: DatePicker;
-	let inputValue = '';
 
 	interface CustomInputHTMLElement extends HTMLElement {
 		type: string;
@@ -21,63 +13,19 @@
 	const setType = (node: CustomInputHTMLElement) => {
 		node.type = type;
 	};
-
-	const showCalendar = () => {
-		if (document.querySelector('.date-picker')) return;
-		datePicker = new DatePicker();
-		datePicker.init();
-	};
 </script>
 
-{#if type === 'date'}
-	<label for={id}>{title}: </label>
-	{#if validateMessage}
-		<span>{validateMessage}</span>
-	{/if}
-
-	<div class="calendar-wrapper">
-		<div id="calendar" />
-		<!-- {#if isCalendarOpen}
-			<div class="calendar-actions">
-				<button
-					class=""
-					on:click={async (e) => {
-						e.preventDefault();
-						const timestamp = datePicker.getValue();
-						inputValue = msToDate(timestamp);
-						value = timestamp;
-						await validation();
-						if (!validateMessage) {
-							isCalendarOpen = false;
-							datePicker.destroy();
-						}
-					}}>Ok</button
-				>
-			</div>
-		{/if} -->
-	</div>
-
-	<input
-		{id}
-		type="input"
-		readonly
-		value={$finishTimeStore || ''}
-		on:click={showCalendar}
-		class:validate-error={validateMessage}
-	/>
-{:else}
-	<label for={id}>{title}: </label>
-	{#if validateMessage}
-		<span>{validateMessage}</span>
-	{/if}
-	<input
-		on:keyup={() => validation()}
-		{id}
-		use:setType
-		bind:value
-		class:validate-error={validateMessage}
-	/>
+<label for={id}>{title}: </label>
+{#if validateMessage}
+	<span>{validateMessage}</span>
 {/if}
+<input
+	on:keyup={() => validation()}
+	{id}
+	use:setType
+	bind:value
+	class:validate-error={validateMessage}
+/>
 
 <style>
 	label {

@@ -4,6 +4,7 @@
 	import TextArea from './TextArea.svelte';
 	import Select from './Select.svelte';
 	import type { SelectDataType } from '../types/select.js';
+	import CalendarInput from './CalendarInput.svelte';
 
 	export let titleValue: string;
 	export let descriptionValue: string;
@@ -12,6 +13,8 @@
 	export let handleSubmit: () => void;
 	export let isTitleCorrect;
 	export let isFinishDateCorrect;
+
+	$: console.log('AddForm', finishTimeValue);
 
 	const selectData: SelectDataType = {
 		Low: PrioEnum.low,
@@ -45,10 +48,11 @@
 			: (dateValidateMessage = '');
 	};
 
-	$: !dateValidateMessage && finishTimeValue ? (isTitleCorrect = true) : (isTitleCorrect = false);
-	$: !titleValidateMessage && titleValue
+	$: !dateValidateMessage && finishTimeValue
 		? (isFinishDateCorrect = true)
 		: (isFinishDateCorrect = false);
+	$: !titleValidateMessage && titleValue ? (isTitleCorrect = true) : (isTitleCorrect = false);
+
 </script>
 
 <form on:submit|preventDefault={handleSubmit} class="modal-content__form">
@@ -61,9 +65,8 @@
 		bind:validateMessage={titleValidateMessage}
 	/>
 	<TextArea id="desc" bind:value={descriptionValue} />
-	<Input
+	<CalendarInput
 		id="finishTime"
-		type="date"
 		bind:value={finishTimeValue}
 		title="Termin date"
 		validation={finishTimeValidation}

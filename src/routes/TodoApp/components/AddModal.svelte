@@ -73,8 +73,8 @@
 				type="submit"
 				onClick={handleAddModal}
 				text="Add"
-				className={!isTitleCorrect || !isFinishDateCorrect ? 'disabled' : 'footer-modal-button'}
-				disabled={!isTitleCorrect || !isFinishDateCorrect}
+				className={isTitleCorrect && isFinishDateCorrect ? 'footer-modal-button' : 'disabled'}
+				disabled={isTitleCorrect && isFinishDateCorrect}
 			/>
 		</div>
 	</div>

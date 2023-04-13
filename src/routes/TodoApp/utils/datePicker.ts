@@ -146,7 +146,7 @@ export class DatePicker {
 
 		const daysInMonth = new Date(this.actualYear, this.actualMonth + 1, 0).getDate();
 		let firstMonthDay = new Date(this.actualYear, this.actualMonth, 1).getDay();
-		console.log(this.actualMonth);
+
 		if (firstMonthDay === 0) {
 			firstMonthDay = 7;
 		}
@@ -291,7 +291,6 @@ export class DatePicker {
 			if (!this.value) return;
 
 			const timestamp = this.getValue();
-			console.log(timestamp);
 			if (finishTimeValidation(timestamp)) {
 				//todo add validation message
 				if (!this.validateMessageSpan) return;
