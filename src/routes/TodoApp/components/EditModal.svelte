@@ -5,40 +5,36 @@
 	import Button from './Button.svelte';
 
 	export let isOpen;
-	export let titleValue: string;
-	export let descriptionValue: string;
-	export let finishTimeValue: number | string;
-	export let prioValue: PrioEnum;
 	export let todo: TodoInterface;
+
+	let titleValue = todo.title;
+	let descriptionValue = todo.description;
+	let finishTimeValue = todo.finishTime;
+	let prioValue = todo.prio;
+
 	const closeModal = () => {
 		isOpen = false;
 	};
 
 	const handleEditModal = () => {
-		const oldValues = $todos.find?.((obj) => obj.id === todo.id);
+		const oldValues = todo;
 		if (!oldValues) {
 			return;
 		}
+
 		const newValues: TodoInterface = {
 			...oldValues,
 			title: titleValue,
 			description: descriptionValue,
-			finishTime: (finishTimeValue as string)
-				.replace('-', '.')
-				.replace('-', '.')
-				.split('.')
-				.reverse()
-				.join('.'),
+			finishTime: finishTimeValue,
 			prio: prioValue
 		};
 
-		const newArray = $todos.map((item) => {
-			if (item.id === todo.id) {
-				return newValues;
-			} else return item;
-		});
+		const copyTodos = [...$todos];
+		const taskIndex = copyTodos.findIndex((todo) => todo.id === newValues.id);
+		copyTodos.splice(taskIndex, 1, newValues);
 
-		todos.set(newArray);
+		todos.set(copyTodos);
 		isOpen = false;
 	};
 </script>

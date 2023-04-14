@@ -10,24 +10,20 @@
 	import EditModal from '../../components/EditModal.svelte';
 	import { signPrio } from '../../utils/signPrio.js';
 	import ConfirmModal from './ConfirmModal.svelte';
-	import type { PrioEnum, TodoInterface } from '../../types/todo.js';
+	import type { TodoInterface } from '../../types/todo.js';
 	import { emptyFunction } from '../utils/emptyFunction.js';
+	import { msToDate } from '../utils/dateParsers.js';
 
 	export let todo: TodoInterface;
-	export let titleValue: string;
-	export let descriptionValue: string;
-	export let finishTimeValue: number | string; //@todo do zmiany przy okazji parserów dat
-	export let prioValue: PrioEnum;
 
 	let isOpen = false;
 	let expanded = false;
 	let isConfirmModalOpen = false;
+	let signedAsDone = false;
 
 	const toggleExpandDetails = () => {
 		expanded = !expanded;
 	};
-
-	$: console.log('Todo.svelte', finishTimeValue);
 
 	const toggleFinished = (id: string) => {
 		const updatedState = [...$todos].map((item) => {
@@ -36,19 +32,20 @@
 				return item;
 			} else return item;
 		});
+		signedAsDone = true;
 		todos.set(updatedState);
 	};
 
 	const showEdit = () => {
 		isOpen = true;
-		titleValue = todo.title;
-		descriptionValue = todo.description;
-		finishTimeValue = todo.finishTime;
-		prioValue = todo.prio;
 	};
 
 	const showConfirmModal = () => {
 		isConfirmModalOpen = true;
+	};
+
+	const hideConfirmModal = () => {
+		isConfirmModalOpen = false;
 	};
 
 	const removeTask = () => {
@@ -57,25 +54,19 @@
 			return items.filter((todos) => todos.id !== todo.id);
 		});
 	};
-
-	const hideConfirmModal = () => {
-		isConfirmModalOpen = false;
-	};
 </script>
 
 <div class="todo">
 	{#if isOpen}
-		<EditModal bind:isOpen {todo} {titleValue} {descriptionValue} {finishTimeValue} {prioValue} />
+		<EditModal bind:isOpen {todo} />
 	{/if}
 	<div class="todo__confirm">
 		<IconContainer
 			onClick={() => toggleFinished(todo.id)}
-			fill={$todos.find((item) => item.id === todo.id)?.isFinished ?? false}
+			fill={signedAsDone}
 			notVisible={todo.isFailed}
 		>
-			<DoneIconContainer
-				isFinished={$todos.find((item) => item.id === todo.id)?.isFinished ?? false}
-			/>
+			<DoneIconContainer isFinished={signedAsDone} />
 		</IconContainer>
 	</div>
 	<div class="todo__content">
@@ -93,7 +84,7 @@
 			</div>
 			<div class="todo__time">
 				<div class="time-icon" />
-				<div class="time">{todo.finishTime}</div>
+				<div class="time">{msToDate(todo.finishTime)}</div>
 			</div>
 		</div>
 	</div>

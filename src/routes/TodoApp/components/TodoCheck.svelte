@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Todo from '../[slug]/components/Todo.svelte';
 	import { todos } from '../store.js';
-	import { PrioEnum, TodoTypeEnum } from '../types/todo.js';
+	import { TodoTypeEnum } from '../types/todo.js';
 	import IconContainer from './IconContainer.svelte';
 	import PlusIcon from './PlusIcon.svelte';
 	import { quintOut } from 'svelte/easing';
@@ -10,10 +10,6 @@
 	import AddModal from './AddModal.svelte';
 
 	export let mode: TodoTypeEnum;
-	export let titleValue: string;
-	export let descriptionValue: string;
-	export let finishTimeValue: string | number;
-	export let prioValue: PrioEnum;
 
 	let isOpen = false;
 	const openModal = () => {
@@ -45,20 +41,20 @@
 				out:fly={{ x: 100, duration: 600 }}
 				animate:flip={{ delay: 450, duration: 250, easing: quintOut }}
 			>
-				<Todo {todo} bind:titleValue bind:descriptionValue bind:finishTimeValue bind:prioValue />
+				<Todo {todo} />
 			</div>
 		{:else}
 			<h2 class="message">Your TodoList is empty.</h2>
 		{/each}
 	{:else if mode === TodoTypeEnum.done}
 		{#each $todos.filter((todo) => todo.isFinished && !todo.isFailed) as todo, i (todo.id)}
-			<Todo {todo} bind:titleValue bind:descriptionValue bind:finishTimeValue bind:prioValue />
+			<Todo {todo} />
 		{:else}
 			<h2 class="message">Your DoneList is empty.</h2>
 		{/each}
 	{:else if mode === TodoTypeEnum.abandoned}
 		{#each $todos.filter((todo) => todo.isFailed) as todo, i (todo.id)}
-			<Todo {todo} bind:titleValue bind:descriptionValue bind:finishTimeValue bind:prioValue />
+			<Todo {todo} />
 		{:else}
 			<h2 class="message">Your DoneList is empty.</h2>
 		{/each}
