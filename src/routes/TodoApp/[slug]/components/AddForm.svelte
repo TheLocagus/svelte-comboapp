@@ -3,16 +3,16 @@
 	import Input from './Input.svelte';
 	import TextArea from './TextArea.svelte';
 	import Select from './Select.svelte';
-	import { titleValidationMessage } from '../store/AddForm';
-	import { finishTimeValidation, titleValidation } from '../utils/addFormValidation.js';
-	import { finishDateValidationMessage } from '../store/AddForm.js';
 	import type { SelectDataType } from '../types/select.js';
+	import CalendarInput from './CalendarInput.svelte';
 
 	export let titleValue: string;
 	export let descriptionValue: string;
-	export let finishTimeValue: string | number;
+	export let finishTimeValue: number;
 	export let prioValue: PrioEnum;
 	export let handleSubmit: () => void;
+	export let isTitleCorrect;
+	export let isFinishDateCorrect;
 
 	const selectData: SelectDataType = {
 		Low: PrioEnum.low,
@@ -20,6 +20,25 @@
 		Hard: PrioEnum.hard,
 		Extreme: PrioEnum.extreme
 	};
+
+	let titleValidateMessage = '';
+	let dateValidateMessage = '';
+
+	const titleValidation = async () => {
+		const value = titleValue;
+		if (!value.toString().trim()) {
+			titleValidateMessage = 'Puste pole.';
+			return;
+		} else {
+			titleValidateMessage = '';
+			return;
+		}
+	};
+
+	$: !dateValidateMessage && finishTimeValue
+		? (isFinishDateCorrect = true)
+		: (isFinishDateCorrect = false);
+	$: !titleValidateMessage && titleValue ? (isTitleCorrect = true) : (isTitleCorrect = false);
 </script>
 
 <form on:submit|preventDefault={handleSubmit} class="modal-content__form">
@@ -28,17 +47,15 @@
 		type="text"
 		bind:value={titleValue}
 		title="Title"
-		validateMethod={() => titleValidation(titleValue)}
-		validateMessage={titleValidationMessage}
+		validation={titleValidation}
+		bind:validateMessage={titleValidateMessage}
 	/>
 	<TextArea id="desc" bind:value={descriptionValue} />
-	<Input
+	<CalendarInput
 		id="finishTime"
-		type="date"
 		bind:value={finishTimeValue}
 		title="Termin date"
-		validateMethod={() => finishTimeValidation(new Date(finishTimeValue).getTime())}
-		validateMessage={finishDateValidationMessage}
+		bind:validateMessage={dateValidateMessage}
 	/>
 	<Select id="prio" title="Priority" bind:value={prioValue} {selectData} />
 </form>

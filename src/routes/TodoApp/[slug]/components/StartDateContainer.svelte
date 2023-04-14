@@ -1,11 +1,12 @@
 <script lang="ts">
 	import StartDateIcon from '../../components/StartDateIcon.svelte';
-	export let time: string;
+	import { msToDate } from '../utils/dateParsers';
+	export let time: number;
 </script>
 
 <div class="time">
 	<StartDateIcon height="16px" />
-	<span>{time}</span>
+	<span>{msToDate(time)}</span>
 </div>
 
 <style>

@@ -3,44 +3,52 @@
 	import { type TodoInterface, PrioEnum } from '../types/todo';
 	import { todos } from '../store';
 	import Button from './Button.svelte';
+	import CalendarInput from '../[slug]/components/CalendarInput.svelte';
 
 	export let isOpen;
-	export let titleValue: string;
-	export let descriptionValue: string;
-	export let finishTimeValue: number | string;
-	export let prioValue: PrioEnum;
 	export let todo: TodoInterface;
+
+	let titleValue = todo.title;
+	let descriptionValue = todo.description;
+	let finishTimeValue = todo.finishTime;
+	let prioValue = todo.prio;
+
+	let isFinishDateCorrect = false;
+	let isTitleCorrect = false;
+
+	let titleValidateMessage = '';
+	let dateValidateMessage = '';
+
 	const closeModal = () => {
 		isOpen = false;
 	};
 
 	const handleEditModal = () => {
-		const oldValues = $todos.find?.((obj) => obj.id === todo.id);
+		const oldValues = todo;
 		if (!oldValues) {
 			return;
 		}
+
 		const newValues: TodoInterface = {
 			...oldValues,
 			title: titleValue,
 			description: descriptionValue,
-			finishTime: (finishTimeValue as string)
-				.replace('-', '.')
-				.replace('-', '.')
-				.split('.')
-				.reverse()
-				.join('.'),
+			finishTime: finishTimeValue,
 			prio: prioValue
 		};
 
-		const newArray = $todos.map((item) => {
-			if (item.id === todo.id) {
-				return newValues;
-			} else return item;
-		});
+		const copyTodos = [...$todos];
+		const taskIndex = copyTodos.findIndex((todo) => todo.id === newValues.id);
+		copyTodos.splice(taskIndex, 1, newValues);
 
-		todos.set(newArray);
+		todos.set(copyTodos);
 		isOpen = false;
 	};
+
+	$: !dateValidateMessage && finishTimeValue
+		? (isFinishDateCorrect = true)
+		: (isFinishDateCorrect = false);
+	$: !titleValidateMessage && titleValue ? (isTitleCorrect = true) : (isTitleCorrect = false);
 </script>
 
 <Modal title="Edit task">
@@ -50,8 +58,7 @@
 			<input id="title" type="text" bind:value={titleValue} />
 			<label for="desc">Description: </label>
 			<textarea rows="8" id="desc" bind:value={descriptionValue} />
-			<label for="finishTime">Termin date: </label>
-			<input id="finishTime" type="date" bind:value={finishTimeValue} />
+			<CalendarInput title="Termin date" bind:value={finishTimeValue} id={'finishTime'} />
 			<label for="prio">Priority: </label>
 			<select name="prio" id="prio" bind:value={prioValue}>
 				<option value={PrioEnum.low}>Low</option>
@@ -63,10 +70,10 @@
 		<div class="modal-footer">
 			<Button type="button" onClick={closeModal} text="Cancel" className="footer-modal-button" />
 			<Button
-				type="button"
 				onClick={handleEditModal}
 				text="Update"
-				className="footer-modal-button"
+				className={isTitleCorrect && isFinishDateCorrect ? 'footer-modal-button' : 'disabled'}
+				disabled={!isTitleCorrect || !isFinishDateCorrect}
 			/>
 		</div>
 	</div>
