@@ -1,6 +1,5 @@
 import { finishTimeStore } from '../store';
 import { finishTimeValidation } from '../[slug]/utils/addFormValidation';
-import { msToDate } from '../[slug]/utils/dateParsers';
 
 export class DatePicker {
 	now: number;
@@ -234,7 +233,8 @@ export class DatePicker {
 		});
 	}
 
-	getValue() {
+	getValue(outsideDate?: number) {
+		if (outsideDate) return outsideDate;
 		const value =
 			this.value + Number(this.hours) * 60 * 60 * 1000 + Number(this.minutes) * 60 * 1000;
 		return value;
@@ -300,12 +300,10 @@ export class DatePicker {
 				if (!this.validateMessageSpan) return;
 				this.validateMessageSpan.innerText = '';
 			}
-			const inputValue = msToDate(timestamp);
+			const inputValue = timestamp;
 			finishTimeStore.set(inputValue);
-			// value = timestamp;
-			// if (!validateMessage) {
+
 			this.destroy();
-			//
 		});
 		this.actionSection.appendChild(this.confirmButton);
 

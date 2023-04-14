@@ -3,6 +3,7 @@
 	import { type TodoInterface, PrioEnum } from '../types/todo';
 	import { todos } from '../store';
 	import Button from './Button.svelte';
+	import CalendarInput from '../[slug]/components/CalendarInput.svelte';
 
 	export let isOpen;
 	export let todo: TodoInterface;
@@ -46,8 +47,7 @@
 			<input id="title" type="text" bind:value={titleValue} />
 			<label for="desc">Description: </label>
 			<textarea rows="8" id="desc" bind:value={descriptionValue} />
-			<label for="finishTime">Termin date: </label>
-			<input id="finishTime" type="date" bind:value={finishTimeValue} />
+			<CalendarInput title="Termin date" bind:value={finishTimeValue} id={'finishTime'} />
 			<label for="prio">Priority: </label>
 			<select name="prio" id="prio" bind:value={prioValue}>
 				<option value={PrioEnum.low}>Low</option>

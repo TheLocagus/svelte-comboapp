@@ -10,7 +10,7 @@ export interface TodoInterface {
 	title: string;
 	description: string;
 	prio: PrioEnum;
-	initialTime: string;
+	initialTime: number;
 	finishTime: number;
 	isFinished: boolean;
 	isFailed?: boolean;

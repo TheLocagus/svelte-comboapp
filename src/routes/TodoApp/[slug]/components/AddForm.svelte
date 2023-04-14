@@ -14,8 +14,6 @@
 	export let isTitleCorrect;
 	export let isFinishDateCorrect;
 
-	$: console.log('AddForm', finishTimeValue);
-
 	const selectData: SelectDataType = {
 		Low: PrioEnum.low,
 		Medium: PrioEnum.medium,
@@ -37,22 +35,10 @@
 		}
 	};
 
-	const finishTimeValidation = async () => {
-		const value = finishTimeValue;
-		console.log({
-			value,
-			data: new Date(Date.now()).setSeconds(0, 0)
-		});
-		value < new Date(Date.now()).setSeconds(0, 0)
-			? (dateValidateMessage = 'Podałeś datę z przeszłości')
-			: (dateValidateMessage = '');
-	};
-
 	$: !dateValidateMessage && finishTimeValue
 		? (isFinishDateCorrect = true)
 		: (isFinishDateCorrect = false);
 	$: !titleValidateMessage && titleValue ? (isTitleCorrect = true) : (isTitleCorrect = false);
-
 </script>
 
 <form on:submit|preventDefault={handleSubmit} class="modal-content__form">
@@ -69,7 +55,6 @@
 		id="finishTime"
 		bind:value={finishTimeValue}
 		title="Termin date"
-		validation={finishTimeValidation}
 		bind:validateMessage={dateValidateMessage}
 	/>
 	<Select id="prio" title="Priority" bind:value={prioValue} {selectData} />

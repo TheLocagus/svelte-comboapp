@@ -11,7 +11,7 @@ export const todos: Writable<TodoInterface[]> = writable([
 		title: 'Write code',
 		description: 'Losowy opis',
 		prio: PrioEnum.low,
-		initialTime: new Date().toLocaleDateString(),
+		initialTime: new Date().getTime(),
 		finishTime: new Date().getTime() + 10 * 24 * 60 * 60 * 1000,
 		isFinished: true,
 		isFailed: true
@@ -21,7 +21,7 @@ export const todos: Writable<TodoInterface[]> = writable([
 		title: 'Write code',
 		description: 'Losowy opis',
 		prio: PrioEnum.hard,
-		initialTime: new Date().toLocaleDateString(),
+		initialTime: new Date().getTime(),
 		finishTime: new Date().getTime() + 10 * 24 * 60 * 60 * 1000,
 		isFinished: false
 	},
@@ -30,7 +30,7 @@ export const todos: Writable<TodoInterface[]> = writable([
 		title: 'Xyz',
 		description: 'Losowy opis',
 		prio: PrioEnum.extreme,
-		initialTime: new Date().toLocaleDateString(),
+		initialTime: new Date().getTime(),
 		finishTime: new Date().getTime() + 10 * 24 * 60 * 60 * 1000,
 		isFinished: true,
 		isFailed: false
@@ -40,7 +40,7 @@ export const todos: Writable<TodoInterface[]> = writable([
 		title: 'Wyjść z psem',
 		description: 'Losowy opis',
 		prio: PrioEnum.low,
-		initialTime: new Date().toLocaleDateString(),
+		initialTime: new Date().getTime(),
 		finishTime: new Date().getTime() + 10 * 24 * 60 * 60 * 1000,
 		isFinished: false
 	},
@@ -49,7 +49,7 @@ export const todos: Writable<TodoInterface[]> = writable([
 		title: 'Umyć naczynia',
 		description: 'Losowy opis',
 		prio: PrioEnum.low,
-		initialTime: new Date().toLocaleDateString(),
+		initialTime: new Date().getTime(),
 		finishTime: new Date().getTime() + 10 * 24 * 60 * 60 * 1000,
 		isFinished: false
 	},
@@ -58,10 +58,10 @@ export const todos: Writable<TodoInterface[]> = writable([
 		title: 'Zrobić zakupy',
 		description: 'Losowy opis',
 		prio: PrioEnum.low,
-		initialTime: new Date().toLocaleDateString(),
+		initialTime: new Date().getTime(),
 		finishTime: new Date().getTime() + 10 * 24 * 60 * 60 * 1000,
 		isFinished: false
 	}
 ]);
 
-export const finishTimeStore = writable('');
+export const finishTimeStore: Writable<'' | number> = writable('');

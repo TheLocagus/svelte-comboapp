@@ -42,7 +42,7 @@
 			id: uuid(),
 			title: titleValue,
 			description: descriptionValue,
-			initialTime: new Date().toLocaleDateString(),
+			initialTime: new Date().getTime(),
 			finishTime: finishTimeValue,
 			isFinished: false,
 			prio: prioValue

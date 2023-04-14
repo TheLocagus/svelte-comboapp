@@ -1,21 +1,36 @@
 <script lang="ts">
+	import { onDestroy, onMount } from 'svelte';
 	import { finishTimeStore } from '../../store';
 	import { DatePicker } from '../../utils/datePicker';
+	import { msToDate } from '../utils/dateParsers';
 	export let id: string;
-	export let value: string | number;
+	export let value: number;
 	export let title: string;
-	export let validation: () => Promise<void>;
 	export let validateMessage = '';
 
 	let datePicker: DatePicker;
 
+	onMount(() => {
+		datePicker = new DatePicker();
+
+		if (!value) {
+			return;
+		}
+		value = datePicker.getValue(value as number);
+	});
+
+	onDestroy(() => {
+		finishTimeStore.set('');
+	});
+
 	const showCalendar = () => {
 		if (document.querySelector('.date-picker')) return;
-		datePicker = new DatePicker();
 		datePicker.init();
 	};
 
-	$: value = $finishTimeStore;
+	$: if ($finishTimeStore) {
+		value = $finishTimeStore;
+	}
 </script>
 
 <label for={id}>{title}: </label>
@@ -31,7 +46,7 @@
 		{id}
 		type="input"
 		readonly
-		bind:value={$finishTimeStore}
+		value={value ? msToDate(datePicker?.getValue(value)) : ''}
 		on:click={showCalendar}
 		class:validate-error={validateMessage}
 	/>
