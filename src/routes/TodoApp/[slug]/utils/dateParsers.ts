@@ -13,5 +13,5 @@ export const msToDate = (timestamp: number) => {
 	const padHours = String(hours).padStart(2, '0');
 	const padMinutes = String(minutes).padStart(2, '0');
 
-	return `${padDay}-${padMonth}-${padYear} ${padHours}:${padMinutes}`;
+	return `${padDay}.${padMonth}.${padYear} ${padHours}:${padMinutes}`;
 };

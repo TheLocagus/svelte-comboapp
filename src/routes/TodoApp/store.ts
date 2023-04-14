@@ -12,7 +12,7 @@ export const todos: Writable<TodoInterface[]> = writable([
 		description: 'Losowy opis',
 		prio: PrioEnum.low,
 		initialTime: new Date().toLocaleDateString(),
-		finishTime: new Date(new Date().getTime() + 10 * 24 * 60 * 60 * 1000).toLocaleDateString(),
+		finishTime: new Date().getTime() + 10 * 24 * 60 * 60 * 1000,
 		isFinished: true,
 		isFailed: true
 	},
@@ -22,7 +22,7 @@ export const todos: Writable<TodoInterface[]> = writable([
 		description: 'Losowy opis',
 		prio: PrioEnum.hard,
 		initialTime: new Date().toLocaleDateString(),
-		finishTime: new Date(new Date().getTime() + 10 * 24 * 60 * 60 * 1000).toLocaleDateString(),
+		finishTime: new Date().getTime() + 10 * 24 * 60 * 60 * 1000,
 		isFinished: false
 	},
 	{
@@ -31,7 +31,7 @@ export const todos: Writable<TodoInterface[]> = writable([
 		description: 'Losowy opis',
 		prio: PrioEnum.extreme,
 		initialTime: new Date().toLocaleDateString(),
-		finishTime: new Date(new Date().getTime() + 10 * 24 * 60 * 60 * 1000).toLocaleDateString(),
+		finishTime: new Date().getTime() + 10 * 24 * 60 * 60 * 1000,
 		isFinished: true,
 		isFailed: false
 	},
@@ -41,7 +41,7 @@ export const todos: Writable<TodoInterface[]> = writable([
 		description: 'Losowy opis',
 		prio: PrioEnum.low,
 		initialTime: new Date().toLocaleDateString(),
-		finishTime: new Date(new Date().getTime() + 10 * 24 * 60 * 60 * 1000).toLocaleDateString(),
+		finishTime: new Date().getTime() + 10 * 24 * 60 * 60 * 1000,
 		isFinished: false
 	},
 	{
@@ -50,7 +50,7 @@ export const todos: Writable<TodoInterface[]> = writable([
 		description: 'Losowy opis',
 		prio: PrioEnum.low,
 		initialTime: new Date().toLocaleDateString(),
-		finishTime: new Date(new Date().getTime() + 10 * 24 * 60 * 60 * 1000).toLocaleDateString(),
+		finishTime: new Date().getTime() + 10 * 24 * 60 * 60 * 1000,
 		isFinished: false
 	},
 	{
@@ -59,7 +59,7 @@ export const todos: Writable<TodoInterface[]> = writable([
 		description: 'Losowy opis',
 		prio: PrioEnum.low,
 		initialTime: new Date().toLocaleDateString(),
-		finishTime: new Date(new Date().getTime() + 10 * 24 * 60 * 60 * 1000).toLocaleDateString(),
+		finishTime: new Date().getTime() + 10 * 24 * 60 * 60 * 1000,
 		isFinished: false
 	}
 ]);
