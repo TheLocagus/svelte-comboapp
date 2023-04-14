@@ -13,6 +13,12 @@
 	let finishTimeValue = todo.finishTime;
 	let prioValue = todo.prio;
 
+	let isFinishDateCorrect = false;
+	let isTitleCorrect = false;
+
+	let titleValidateMessage = '';
+	let dateValidateMessage = '';
+
 	const closeModal = () => {
 		isOpen = false;
 	};
@@ -38,6 +44,11 @@
 		todos.set(copyTodos);
 		isOpen = false;
 	};
+
+	$: !dateValidateMessage && finishTimeValue
+		? (isFinishDateCorrect = true)
+		: (isFinishDateCorrect = false);
+	$: !titleValidateMessage && titleValue ? (isTitleCorrect = true) : (isTitleCorrect = false);
 </script>
 
 <Modal title="Edit task">
@@ -59,10 +70,10 @@
 		<div class="modal-footer">
 			<Button type="button" onClick={closeModal} text="Cancel" className="footer-modal-button" />
 			<Button
-				type="button"
 				onClick={handleEditModal}
 				text="Update"
-				className="footer-modal-button"
+				className={isTitleCorrect && isFinishDateCorrect ? 'footer-modal-button' : 'disabled'}
+				disabled={!isTitleCorrect || !isFinishDateCorrect}
 			/>
 		</div>
 	</div>

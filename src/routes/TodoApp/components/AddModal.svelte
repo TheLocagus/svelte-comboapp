@@ -70,11 +70,10 @@
 		<div class="modal-footer">
 			<Button type="button" onClick={closeModal} text="Cancel" className="footer-modal-button" />
 			<Button
-				type="submit"
 				onClick={handleAddModal}
 				text="Add"
 				className={isTitleCorrect && isFinishDateCorrect ? 'footer-modal-button' : 'disabled'}
-				disabled={isTitleCorrect && isFinishDateCorrect}
+				disabled={!isTitleCorrect || !isFinishDateCorrect}
 			/>
 		</div>
 	</div>
