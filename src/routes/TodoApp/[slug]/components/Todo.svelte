@@ -11,7 +11,7 @@
 	import ConfirmModal from './ConfirmModal.svelte';
 	import type { TodoInterface } from '../../types/todo.js';
 	import { emptyFunction } from '../utils/emptyFunction.js';
-	import { msToDate } from '../utils/dateParsers.js';
+	import { msToDateWithTime } from '../utils/dateParsers.js';
 	import AddEditModal from '../../components/AddEditModal.svelte';
 
 	export let todo: TodoInterface;
@@ -84,7 +84,7 @@
 			</div>
 			<div class="todo__time">
 				<div class="time-icon" />
-				<div class="time">{msToDate(todo.finishTime)}</div>
+				<div class="time">{msToDateWithTime(todo.finishTime)}</div>
 			</div>
 		</div>
 	</div>

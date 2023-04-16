@@ -2,7 +2,7 @@
 	import { onDestroy, onMount } from 'svelte';
 	import { finishTimeStore } from '../../store';
 	import { DatePicker } from '../../utils/datePicker';
-	import { msToDate } from '../utils/dateParsers';
+	import { msToDateWithTime } from '../utils/dateParsers';
 	export let id: string;
 	export let value: number;
 	export let title: string;
@@ -46,7 +46,7 @@
 		{id}
 		type="input"
 		readonly
-		value={value ? msToDate(datePicker?.getValue(value)) : ''}
+		value={value ? msToDateWithTime(datePicker?.getValue(value)) : ''}
 		on:click={showCalendar}
 		class:validate-error={validateMessage}
 	/>
