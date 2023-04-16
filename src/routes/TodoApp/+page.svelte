@@ -1,5 +1,8 @@
 <script>
 	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
 
-	$: goto('/todoapp/todo');
+	onMount(() => {
+		goto('/todoapp/todo');
+	});
 </script>
