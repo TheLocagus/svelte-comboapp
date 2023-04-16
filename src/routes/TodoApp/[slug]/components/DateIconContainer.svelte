@@ -1,11 +1,18 @@
 <script lang="ts">
+	import EndDateIcon from '../../components/EndDateIcon.svelte';
 	import StartDateIcon from '../../components/StartDateIcon.svelte';
 	import { msToDateWithTime } from '../utils/dateParsers';
+
+	export let type: 'add' | 'end' = 'add';
 	export let time: number;
 </script>
 
 <div class="time">
-	<StartDateIcon height="16px" />
+	{#if type === 'add'}
+		<StartDateIcon height="16px" />
+	{:else}
+		<EndDateIcon height="16px" />
+	{/if}
 	<span>{msToDateWithTime(time)}</span>
 </div>
 
