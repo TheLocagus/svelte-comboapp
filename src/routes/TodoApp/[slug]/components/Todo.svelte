@@ -5,14 +5,13 @@
 	import DoneIconContainer from '../../components/DoneIconContainer.svelte';
 	import EditContainer from '../../components/EditContainer.svelte';
 	import RemoveContainer from '../../components/RemoveContainer.svelte';
-	import StartDateContainer from './StartDateContainer.svelte';
-	import EndDateContainer from './EndDateContainer.svelte';
 	import { signPrio } from '../../utils/signPrio.js';
 	import ConfirmModal from './ConfirmModal.svelte';
 	import type { TodoInterface } from '../../types/todo.js';
 	import { emptyFunction } from '../utils/emptyFunction.js';
 	import { msToDateWithTime } from '../utils/dateParsers.js';
 	import AddEditModal from '../../components/AddEditModal.svelte';
+	import DateIconContainer from './DateIconContainer.svelte';
 
 	export let todo: TodoInterface;
 
@@ -104,8 +103,8 @@
 		</div>
 		<div class="details-row">
 			<div class="time-summary">
-				<StartDateContainer time={todo.initialTime} />
-				<EndDateContainer time={todo.finishTime} />
+				<DateIconContainer time={todo.initialTime} type="add" />
+				<DateIconContainer time={todo.finishTime} type="end" />
 			</div>
 			<div class="handling-buttons">
 				<EditContainer click={showEdit} />
