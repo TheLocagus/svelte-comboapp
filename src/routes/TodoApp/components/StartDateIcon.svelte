@@ -11,7 +11,7 @@
 </svg>
 
 <style>
-	:global(.start-date-icon) {
+	.start-date-icon {
 		fill: pink;
 	}
 </style>
