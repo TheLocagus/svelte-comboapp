@@ -192,7 +192,7 @@ export class DatePicker {
 		const headerArrowLeft = document.createElement('p');
 		headerArrowLeft.classList.add('date-picker__arrow-left');
 		headerArrowLeft.textContent = '<';
-		headerArrowLeft.addEventListener('click', (e) => {
+		headerArrowLeft.addEventListener('click', () => {
 			this.actualMonth--;
 			if (this.actualMonth < 0) {
 				this.actualMonth = 11;
@@ -206,7 +206,7 @@ export class DatePicker {
 		const headerArrowRight = document.createElement('p');
 		headerArrowRight.classList.add('date-picker__arrow-right');
 		headerArrowRight.textContent = '>';
-		headerArrowRight.addEventListener('click', (e) => {
+		headerArrowRight.addEventListener('click', () => {
 			this.actualMonth++;
 			if (this.actualMonth > 11) {
 				this.actualMonth = 0;
