@@ -7,12 +7,12 @@
 	import RemoveContainer from '../../components/RemoveContainer.svelte';
 	import StartDateContainer from './StartDateContainer.svelte';
 	import EndDateContainer from './EndDateContainer.svelte';
-	import EditModal from '../../components/EditModal.svelte';
 	import { signPrio } from '../../utils/signPrio.js';
 	import ConfirmModal from './ConfirmModal.svelte';
 	import type { TodoInterface } from '../../types/todo.js';
 	import { emptyFunction } from '../utils/emptyFunction.js';
 	import { msToDate } from '../utils/dateParsers.js';
+	import AddEditModal from '../../components/AddEditModal.svelte';
 
 	export let todo: TodoInterface;
 
@@ -58,7 +58,7 @@
 
 <div class="todo">
 	{#if isOpen}
-		<EditModal bind:isOpen {todo} />
+		<AddEditModal bind:isOpen {todo} />
 	{/if}
 	<div class="todo__confirm">
 		<IconContainer

@@ -7,7 +7,7 @@
 	import { quintOut } from 'svelte/easing';
 	import { flip } from 'svelte/animate';
 	import { fly } from 'svelte/transition';
-	import AddModal from './AddModal.svelte';
+	import AddEditModal from './AddEditModal.svelte';
 
 	export let mode: TodoTypeEnum;
 
@@ -21,7 +21,7 @@
 
 {#if mode === TodoTypeEnum.inProgress}
 	{#if isOpen}
-		<AddModal bind:isOpen />
+		<AddEditModal bind:isOpen />
 	{/if}
 	<div class="add-todo-container">
 		<div class="plus-icon">
@@ -47,13 +47,13 @@
 			<h2 class="message">Your TodoList is empty.</h2>
 		{/each}
 	{:else if mode === TodoTypeEnum.done}
-		{#each $todos.filter((todo) => todo.isFinished && !todo.isFailed) as todo, i (todo.id)}
+		{#each $todos.filter((todo) => todo.isFinished && !todo.isFailed) as todo (todo.id)}
 			<Todo {todo} />
 		{:else}
 			<h2 class="message">Your DoneList is empty.</h2>
 		{/each}
 	{:else if mode === TodoTypeEnum.abandoned}
-		{#each $todos.filter((todo) => todo.isFailed) as todo, i (todo.id)}
+		{#each $todos.filter((todo) => todo.isFailed) as todo (todo.id)}
 			<Todo {todo} />
 		{:else}
 			<h2 class="message">Your DoneList is empty.</h2>
