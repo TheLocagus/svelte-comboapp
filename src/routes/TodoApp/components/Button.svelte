@@ -6,12 +6,13 @@
 	export let className = 'basic-button-style';
 	export let toGlow = false;
 	export let disabled = false;
+	export let id: string;
 </script>
 
 {#if !url && onClick}
-	<button {type} class={className} on:click={onClick} {disabled}>{text}</button>
+	<button {id} {type} class={className} on:click={onClick} {disabled}>{text}</button>
 {:else}
-	<a class={className} class:active={toGlow} href={url}>{text}</a>
+	<a {id} class={className} class:active={toGlow} href={url}>{text}</a>
 {/if}
 
 <style>

@@ -4,9 +4,6 @@
 	import { TodoTypeEnum } from '../types/todo.js';
 	import IconContainer from './IconContainer.svelte';
 	import PlusIcon from './PlusIcon.svelte';
-	import { quintOut } from 'svelte/easing';
-	import { flip } from 'svelte/animate';
-	import { fly } from 'svelte/transition';
 	import AddEditModal from './AddEditModal.svelte';
 
 	export let mode: TodoTypeEnum;
@@ -23,9 +20,9 @@
 	{#if isOpen}
 		<AddEditModal bind:isOpen />
 	{/if}
-	<div class="add-todo-container">
-		<div class="plus-icon">
-			<IconContainer fill={true} onClick={openModal}>
+	<div id="add-todo-container" class="add-todo-container">
+		<div id="plus-icon" class="plus-icon">
+			<IconContainer fill={true} onClick={openModal} ariaLabel="Add new task button" role="button">
 				<PlusIcon height="15px" />
 			</IconContainer>
 		</div>

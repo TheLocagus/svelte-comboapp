@@ -102,8 +102,15 @@
 		/>
 
 		<div class="modal-footer">
-			<Button type="button" onClick={closeModal} text="Cancel" className="footer-modal-button" />
 			<Button
+				id="add-edit-modal-cancel-button"
+				type="button"
+				onClick={closeModal}
+				text="Cancel"
+				className="footer-modal-button"
+			/>
+			<Button
+				id="add-edit-modal-handle-button"
 				onClick={todo ? handleEdit : handleAdd}
 				text={todo ? 'Update' : 'Add'}
 				className={isTitleCorrect && isFinishDateCorrect ? 'footer-modal-button' : 'disabled'}

@@ -4,6 +4,8 @@
 	export let fill = false;
 	export let notVisible = false;
 	export let onClick: () => void = emptyFunction;
+	export let ariaLabel: string;
+	export let role: string;
 </script>
 
 <div
@@ -12,6 +14,9 @@
 	class:notVisible
 	on:click={() => onClick()}
 	on:keypress={emptyFunction}
+	aria-label={ariaLabel}
+	{role}
+	aria-checked={role === 'checkbox' ? fill : null}
 >
 	<slot />
 </div>

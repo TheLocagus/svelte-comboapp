@@ -2,12 +2,6 @@
 	<div class="a-container">
 		<a href="/todoapp/">TODO</a>
 	</div>
-	<div class="a-container">
-		<a>Chess game</a>
-	</div>
-	<div class="a-container">
-		<a>CV</a>
-	</div>
 </main>
 
 <style>

@@ -64,6 +64,10 @@
 			onClick={() => toggleFinished(todo.id)}
 			fill={todo.isFinished}
 			notVisible={todo.isFailed}
+			role="checkbox"
+			ariaLabel={`Checkbox do zmiany statusu zadania. Aktualny status: ${
+				todo.isFinished ? 'Gotowe' : 'Do zrobienia'
+			}`}
 		>
 			<DoneIconContainer isFinished={todo.isFinished} />
 		</IconContainer>

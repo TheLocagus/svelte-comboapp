@@ -16,8 +16,13 @@
 		</div>
 		<div class="modal-actions">
 			<div>
-				<Button type="button" text="Ok" onClick={removeTask} />
-				<Button type="button" text="Cancel" onClick={hideConfirmModal} />
+				<Button id="confirm-modal-ok-button" type="button" text="Ok" onClick={removeTask} />
+				<Button
+					id="confirm-modal-cancel-button"
+					type="button"
+					text="Cancel"
+					onClick={hideConfirmModal}
+				/>
 			</div>
 		</div>
 	</div>

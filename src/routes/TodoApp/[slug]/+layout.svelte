@@ -7,22 +7,23 @@
 </script>
 
 <div class="app-container">
-	<div class="todo-views-container">
+	<nav class="todo-views-container">
 		{#each data.sections as section (section)}
 			<Button
+				id={`navigation-to-${section.title.split(' ').join('-')}`}
 				className="todo-views-button"
 				text={section.title}
 				url={`/todoapp/${section.slug}`}
 				toGlow={$mode === section.todoType}
 			/>
 		{/each}
-	</div>
+	</nav>
 	<slot />
 </div>
 
 <style>
 	.app-container {
-		min-height: 101vh;
+		min-height: 101vh; /* @TODO: make showing scroll doesnt move layout then change min-height to 100vh */
 		width: 100%;
 		background-color: #1a1a1a;
 		display: flex;

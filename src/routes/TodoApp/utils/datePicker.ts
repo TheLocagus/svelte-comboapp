@@ -169,7 +169,8 @@ export class DatePicker {
 			}
 			const td = document.createElement('td');
 			td.innerText = (i - firstMonthDay + 2).toString();
-			td.dayNr = i - firstMonthDay + 2;
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			(td as any).dayNr = i - firstMonthDay + 2;
 			td.classList.add('day');
 
 			tr.appendChild(td);
@@ -227,7 +228,12 @@ export class DatePicker {
 				const alreadyActive = document.querySelector('.day-active');
 				if (alreadyActive) alreadyActive.classList.remove('day-active');
 				this.value = 0;
-				this.value = new Date(this.actualYear, this.actualMonth, e.target?.dayNr).getTime();
+				this.value = new Date(
+					this.actualYear,
+					this.actualMonth,
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+					(e.target as any)?.dayNr
+				).getTime();
 				(e.target as HTMLElement).classList.add('day-active');
 			}
 		});
