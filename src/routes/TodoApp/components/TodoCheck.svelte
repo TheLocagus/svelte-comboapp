@@ -37,10 +37,7 @@
 <div class="todo-container">
 	{#if mode === TodoTypeEnum.inProgress}
 		{#each tasks as todo (todo.id)}
-			<div
-				out:fly={{ x: 100, duration: 600 }}
-				animate:flip={{ delay: 450, duration: 250, easing: quintOut }}
-			>
+			<div>
 				<Todo {todo} />
 			</div>
 		{:else}

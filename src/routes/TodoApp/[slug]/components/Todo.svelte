@@ -18,7 +18,6 @@
 	let isOpen = false;
 	let expanded = false;
 	let isConfirmModalOpen = false;
-	let signedAsDone = false;
 
 	const toggleExpandDetails = () => {
 		expanded = !expanded;
@@ -31,7 +30,6 @@
 				return item;
 			} else return item;
 		});
-		signedAsDone = true;
 		todos.set(updatedState);
 	};
 
@@ -53,6 +51,8 @@
 			return items.filter((todos) => todos.id !== todo.id);
 		});
 	};
+
+	$: console.log(todo);
 </script>
 
 <div class="todo">
@@ -62,10 +62,10 @@
 	<div class="todo__confirm">
 		<IconContainer
 			onClick={() => toggleFinished(todo.id)}
-			fill={signedAsDone}
+			fill={todo.isFinished}
 			notVisible={todo.isFailed}
 		>
-			<DoneIconContainer isFinished={signedAsDone} />
+			<DoneIconContainer isFinished={todo.isFinished} />
 		</IconContainer>
 	</div>
 	<div class="todo__content">
