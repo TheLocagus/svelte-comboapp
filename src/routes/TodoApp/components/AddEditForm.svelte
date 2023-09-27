@@ -27,7 +27,7 @@
 	const titleValidation = async () => {
 		const value = titleValue;
 		if (!value.toString().trim()) {
-			titleValidateMessage = 'Puste pole.';
+			titleValidateMessage = 'To pole nie może być puste';
 			return;
 		} else {
 			titleValidateMessage = '';

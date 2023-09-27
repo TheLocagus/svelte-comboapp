@@ -1,7 +1,7 @@
 <script lang="ts">
 	export let value: string;
 	export let id: string;
-	export let rows = 8;
+	export let rows = 4;
 </script>
 
 <label for={id}>Description: </label>

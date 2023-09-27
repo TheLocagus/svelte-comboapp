@@ -33,11 +33,12 @@
 	}
 </script>
 
-<label for={id}>{title}: </label>
-{#if validateMessage}
-	<span>{validateMessage}</span>
-{/if}
-
+<div class="label-wrapper">
+	<label for={id}>{title}: </label>
+	{#if validateMessage}
+		<span>{validateMessage}</span>
+	{/if}
+</div>
 <div class="calendar-wrapper">
 	<div id="calendar" />
 </div>
@@ -53,7 +54,15 @@
 {/key}
 
 <style>
+	.label-wrapper {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-top: 5px;
+	}
+
 	label {
+		flex-grow: 1;
 		margin: 10px 0 5px;
 	}
 
@@ -64,5 +73,17 @@
 		font-size: 18px;
 		border-radius: 5px;
 		background-color: pink;
+		cursor: pointer;
+	}
+
+	.validate-error {
+		border: 1px solid red;
+	}
+
+	label + span {
+		margin-left: 10px;
+		font-size: 0.8rem;
+		color: #db1414;
+		font-weight: bold;
 	}
 </style>

@@ -26,5 +26,10 @@
 		font-size: 18px;
 		border-radius: 5px;
 		background-color: pink;
+		cursor: pointer;
+	}
+
+	option {
+		cursor: pointer;
 	}
 </style>

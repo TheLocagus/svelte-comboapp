@@ -15,12 +15,15 @@
 	};
 </script>
 
-<label for={id}>{title}: </label>
-{#if validateMessage}
-	<span>{validateMessage}</span>
-{/if}
+<div class="label-wrapper">
+	<label for={id}>{title}: </label>
+	{#if validateMessage}
+		<span>{validateMessage}</span>
+	{/if}
+</div>
 <input
 	on:keyup={() => validation()}
+	on:focusout={() => validation()}
 	{id}
 	use:setType
 	bind:value
@@ -28,7 +31,14 @@
 />
 
 <style>
+	.label-wrapper {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
 	label {
+		flex-grow: 1;
 		margin: 10px 0 5px;
 	}
 
@@ -48,7 +58,7 @@
 	label + span {
 		margin-left: 10px;
 		font-size: 0.8rem;
-		color: #8d0707;
+		color: #db1414;
 		font-weight: bold;
 	}
 
