@@ -5,7 +5,7 @@
 	export let mode: TodoTypeEnum;
 </script>
 
-<main>
+<main id="layout-main">
 	<TodoCheck {mode} />
 </main>
 

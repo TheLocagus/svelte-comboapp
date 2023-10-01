@@ -15,6 +15,7 @@
 
 	export let isOpen;
 	export let todo: TodoInterface | undefined = undefined;
+	export let id: string;
 
 	let titleValue = '';
 	let descriptionValue = '';
@@ -89,7 +90,7 @@
 	};
 </script>
 
-<Modal title={todo ? 'Edit task' : 'Add task'}>
+<Modal {id} title={todo ? 'Edit task' : 'Add task'}>
 	<div class="modal-content">
 		<AddEditForm
 			bind:titleValue

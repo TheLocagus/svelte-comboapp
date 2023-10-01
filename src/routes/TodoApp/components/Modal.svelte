@@ -1,9 +1,10 @@
 <script lang="ts">
 	export let title: string;
+	export let id: string;
 </script>
 
 <div class="modal-background" />
-<div class="modal">
+<div class="modal" {id}>
 	<div class="modal-title">{title}</div>
 	<div class="modal-content">
 		<slot />

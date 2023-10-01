@@ -7,7 +7,7 @@
 	export let taskTitle: string;
 </script>
 
-<Modal title={`Jesteś pewny, że chcesz usunąć zadanie ${taskTitle}?`}>
+<Modal id="confirm-modal" title={`Jesteś pewny, że chcesz usunąć zadanie ${taskTitle}?`}>
 	<div class="modal-info-wrapper">
 		<div class="modal-info">
 			<p>

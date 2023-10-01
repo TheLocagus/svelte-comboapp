@@ -18,7 +18,7 @@
 
 {#if mode === TodoTypeEnum.inProgress}
 	{#if isOpen}
-		<AddEditModal bind:isOpen />
+		<AddEditModal bind:isOpen id="add-task-modal" />
 	{/if}
 	<div id="add-todo-container" class="add-todo-container">
 		<div id="plus-icon" class="plus-icon">

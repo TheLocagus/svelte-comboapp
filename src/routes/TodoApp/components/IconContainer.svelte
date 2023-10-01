@@ -8,6 +8,7 @@
 	export let role: string;
 </script>
 
+<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 <div
 	class="icon-container"
 	class:fill
@@ -17,6 +18,7 @@
 	aria-label={ariaLabel}
 	{role}
 	aria-checked={role === 'checkbox' ? fill : null}
+	tabindex={role === 'button' || role === 'checkbox' ? 0 : null}
 >
 	<slot />
 </div>

@@ -57,7 +57,7 @@
 
 <div class="todo">
 	{#if isOpen}
-		<AddEditModal bind:isOpen {todo} />
+		<AddEditModal bind:isOpen {todo} id="edit-task-modal" />
 	{/if}
 	<div class="todo__confirm">
 		<IconContainer
@@ -93,14 +93,30 @@
 	</div>
 	<div class="expand-arrow-content">
 		<div class="expand-arrow">
-			<span class:rotate={expanded} on:click={toggleExpandDetails} on:keypress={emptyFunction}>
+			<span
+				class:rotate={expanded}
+				on:click={toggleExpandDetails}
+				on:keypress={emptyFunction}
+				role="button"
+				aria-label={expanded ? 'Rozwinięty' : 'Zwinięty'}
+				tabindex="0"
+			>
 				<BottomArrowIcon height="15px" />
 			</span>
 		</div>
 	</div>
 </div>
 
-<div class="expanded-content" class:expanded>
+<div
+	id={`task-details-${todo.id}`}
+	class="expanded-content"
+	class:expanded
+	aria-live="polite"
+	aria-label="Wysuwane pole szczegółów zadania"
+	aria-hidden={!expanded}
+	aria-busy={!expanded}
+	role="tabpanel"
+>
 	<div class="expanded-details">
 		<div class="description-row">
 			<div class="description">{todo.description}</div>
@@ -117,6 +133,7 @@
 		</div>
 	</div>
 </div>
+
 {#if isConfirmModalOpen}
 	<ConfirmModal taskTitle={todo.title} {removeTask} {hideConfirmModal} />
 {/if}
