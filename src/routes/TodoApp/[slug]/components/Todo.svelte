@@ -19,8 +19,14 @@
 	let expanded = false;
 	let isConfirmModalOpen = false;
 
-	const toggleExpandDetails = () => {
+	const toggleExpandDetails = async (e: Event) => {
 		expanded = !expanded;
+		const element = e.target as HTMLSpanElement;
+
+		element.blur();
+		setTimeout(() => {
+			element.focus();
+		}, 50);
 	};
 
 	const toggleFinished = (id: string) => {
@@ -94,12 +100,14 @@
 	<div class="expand-arrow-content">
 		<div class="expand-arrow">
 			<span
+				id={`task-expand-details-${todo.id}`}
 				class:rotate={expanded}
-				on:click={toggleExpandDetails}
+				on:click={(e) => toggleExpandDetails(e)}
 				on:keypress={emptyFunction}
 				role="button"
-				aria-label={expanded ? 'Rozwinięty' : 'Zwinięty'}
+				aria-expanded={expanded}
 				tabindex="0"
+				aria-controls={`task-details-${todo.id}`}
 			>
 				<BottomArrowIcon height="15px" />
 			</span>
@@ -114,8 +122,6 @@
 	aria-live="polite"
 	aria-label="Wysuwane pole szczegółów zadania"
 	aria-hidden={!expanded}
-	aria-busy={!expanded}
-	role="tabpanel"
 >
 	<div class="expanded-details">
 		<div class="description-row">
